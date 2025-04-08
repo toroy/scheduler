@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.clubfactory.platform.scheduler.dal.po.User" >
+    <id column="id" property="id" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="create_user" property="createUser" />
+    <result column="update_user" property="updateUser" />
+    <result column="uid" property="uid" />
+    <result column="name" property="name" />
+    <result column="depart_id" property="departId" />
+    <result column="is_admin" property="isAdmin" />
+    <result column="depart_name" property="departName" />
+    <result column="alias" property="alias" />
+  </resultMap>
+
+
+  <sql id="Select_Column" >
+   id
+   ,is_deleted
+   ,create_user
+   ,update_user
+	,uid
+	,name
+	,depart_id
+	,is_admin
+	,depart_name
+	,alias
+	,create_time
+    ,update_time
+  </sql>
+
+
+  <sql id="Insert_Column">
+     create_time
+     ,update_time
+     , is_deleted
+     ,create_user
+     ,update_user
+      ,uid
+      ,name
+      ,depart_id
+      ,is_admin
+      ,depart_name
+      ,alias
+  </sql>
+
+<sql id="Insert_Value">
+  #{po.createTime}
+  ,#{po.updateTime}
+  ,#{po.isDeleted}
+  ,#{po.createUser}
+  ,#{po.updateUser}
+    ,#{po.uid}
+    ,#{po.name}
+    ,#{po.departId}
+    ,#{po.isAdmin}
+    ,#{po.departName}
+    ,#{po.alias}
+</sql>
+
+
+ <sql id="Single_Where_Sql" >
+    <if test="isDeleted != null" >
+    ${joinStr} is_deleted = #{isDeleted}
+    </if>
+     <if test="createTime != null" >
+    ${joinStr} create_time = #{createTime}
+     </if>
+     <if test="createUser != null" >
+    ${joinStr} create_user = #{createUser}
+     </if>
+     <if test="alias != null" >
+    ${joinStr} alias = #{alias}
+     </if>
+     <if test="uid != null and uid != ''" >
+        ${joinStr} uid =#{uid}
+     </if>
+     <if test="name != null and name != ''" >
+        ${joinStr} name like concat("%",#{name},"%")
+     </if>
+     <if test="departId != null" >
+         ${joinStr} depart_id =#{departId}
+     </if>
+     <if test="isAdmin != null and isAdmin != ''" >
+        ${joinStr} is_admin =#{isAdmin}
+     </if>
+     <if test="departName != null and departName != ''" >
+        ${joinStr} depart_name like concat("%",#{departName},"%")
+     </if>
+</sql>
+
+<sql id="Table_Name" >
+   sc_user
+</sql>
+
+
+      <sql id="Where_Sql" >
+      <if test="endDate != null and endDate != ''">
+      		<![CDATA[ and create_time < #{endDate} ]]>
+      	</if>
+      	<if test="startDate != null and startDate != ''">
+      		<![CDATA[ and create_time >= #{startDate} ]]>
+      	</if>
+      	<if test="id != null" >
+      		and id = #{id}
+      	</if>
+        <if test="ids != null and ids.size() > 0" >
+          and
+          <choose>
+            <when test="queryListFieldName != null  and queryListFieldName !=''">${queryListFieldName}</when>
+            <otherwise>id</otherwise>
+          </choose>
+          in
+          <foreach collection="ids" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+        </if>
+        <include refid="Single_Where_Sql"><property name="joinStr" value="and"/></include>
+    </sql>
+
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+
+    <insert id="saveBatch">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        <foreach item="po" collection="list" separator=",">
+        (
+          <include refid="Insert_Value"/>
+        )
+        </foreach>
+    </insert>
+
+
+  <select id="get" resultMap="BaseResultMap">
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+    limit 1
+  </select>
+
+
+  <select id="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" /> 
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+  </select>
+
+
+  <select id="count" resultType="java.lang.Integer">
+      select count(1) from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </select>
+
+
+  <delete id="remove">
+      delete from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+  </delete>
+
+
+  <update id="edit">
+    update <include refid="Table_Name" />
+    <set >
+       update_time = #{updateTime}
+       <if test="updateParam != null" >
+      <foreach collection="updateParam" index="k" item="v">
+        <if test="null != v">
+          , ${k} = #{v}
+        </if>
+      </foreach>
+    </if>
+    </set>
+    <where>
+    <include refid="Where_Sql"></include>
+    </where>
+    
+  </update>
+
+  <update id="logicRemove">
+      update <include refid="Table_Name" />
+      <set >
+         update_time = #{updateTime},is_deleted = true
+      </set>
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </update>
+
+
+</mapper>

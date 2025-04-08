@@ -1,0 +1,43 @@
+<!-- Logback configuration. See http://logback.qos.ch/manual/index.html -->
+<!--120 seconds加载一次配置文件，不用重启-->
+<!--http://logback.qos.ch/manual/configuration.html#autoScan-->
+<!--https://www.iteye.com/blog/ihenu-2369271-->
+<configuration scan="true" scanPeriod="120 seconds">
+    <property name="log.base" value="../logs"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %date{yyyy-MM-dd HH:mm:ss} %msg%n
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <appender name="TASKLOGFILE" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <filter class="com.clubfactory.platform.scheduler.engine.config.TaskLogFilter"/>
+        <Discriminator class="com.clubfactory.platform.scheduler.engine.config.TaskLogDiscriminator">
+            <key>taskAppId</key>
+            <logBase>${log.base}</logBase>
+        </Discriminator>
+        <sift>
+            <appender name="FILE-${taskAppId}" class="ch.qos.logback.core.FileAppender">
+                <file>${log.base}/task_instance/${taskAppId}.log</file>
+                <encoder>
+                    <pattern>
+                        %date{yyyy-MM-dd HH:mm:ss} %msg%n
+                    </pattern>
+                    <charset>UTF-8</charset>
+                </encoder>
+                <append>true</append>
+            </appender>
+        </sift>
+    </appender>
+
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="TASKLOGFILE" />
+    </root>
+</configuration>

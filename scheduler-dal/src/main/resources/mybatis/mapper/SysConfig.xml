@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.SysConfigMapper">
+    <resultMap id="baseResultMap" type="com.clubfactory.platform.scheduler.dal.po.SysConfig">
+        <id column="id" property="id"/>
+        <result column="apply_host" property="applyHost"/>
+        <result column="param_key" property="paramKey"/>
+        <result column="param_val" property="paramValue"/>
+        <result column="param_desc" property="paramDesc"/>
+        <result column="config_type" property="configType"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+
+    <sql id="Select_Column">
+        id
+        ,apply_host
+        ,param_key
+        ,param_val
+        ,param_desc
+        ,config_type
+	    ,create_time
+	    ,update_time
+    </sql>
+
+    <sql id="Insert_Column">
+        apply_host
+        ,param_key
+        ,param_val
+        ,param_desc
+        ,config_type
+	    ,create_time
+	    ,update_time
+	</sql>
+
+    <sql id="Insert_Value">
+        #{sysConf.applyHost}
+        ,#{sysConf.paramKey}
+        ,#{sysConf.paramValue}
+        ,#{sysConf.paramDesc}
+        ,#{sysConf.configType}
+        ,#{sysConf.createTime}
+        ,#{sysConf.updateTime}
+    </sql>
+
+
+    <sql id="Table_Name">
+        sc_sys_config
+    </sql>
+
+
+    <sql id="Where_Sql" >
+        <include refid="Where_Sql_No_ApplyHost"/>
+        <if test="applyHost != null and applyHost != ''" >
+            and apply_host =#{applyHost}
+        </if>
+    </sql>
+
+    <sql id="Where_Sql_No_ApplyHost" >
+        <if test="id != null" >
+            and id = #{id}
+        </if>
+
+        <if test="createTime != null" >
+            and create_time = #{createTime}
+        </if>
+        <if test="updateTime != null" >
+            and update_time = #{updateTime}
+        </if>
+        <if test="paramKey != null and paramKey != '' " >
+            and param_key like concat('%', #{paramKey},'%')
+        </if>
+        <if test="paramValue != null and paramValue != ''" >
+            and param_val like concat('%',#{paramValue},'%')
+        </if>
+        <if test="paramDesc != null and paramDesc != ''" >
+            and param_desc like concat('%', #{paramDesc}
+        </if>
+        <if test="configType != null" >
+            and config_type =#{configType}
+        </if>
+    </sql>
+
+
+
+    <insert id="save">
+        insert into <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+    <update id="update">
+        update <include refid="Table_Name" />
+        <set >
+            update_time = #{updateTime}
+            <if test="updateParam != null" >
+                <foreach collection="updateParam" index="k" item="v">
+                    <if test="null != v">
+                        , ${k} = #{v}
+                    </if>
+                </foreach>
+            </if>
+        </set>
+        <where>
+            <include refid="Where_Sql"></include>
+        </where>
+    </update>
+    <delete id="delete">
+        delete from <include refid="Table_Name" />
+        where 1 = 1
+        <include refid="Where_Sql"></include>
+    </delete>
+
+    <select id="list" resultMap="baseResultMap">
+        select
+        <include refid="Select_Column" />
+        from <include refid="Table_Name" />
+        where 1 = 1
+        <include refid="Where_Sql"></include>
+    </select>
+    
+    
+    <select id="get" resultMap="baseResultMap">
+        select
+        <include refid="Select_Column" />
+        from <include refid="Table_Name" />
+        where 1 = 1
+        <include refid="Where_Sql"></include>
+        order by id desc
+        limit 1
+    </select>
+    
+    <select id="listValid" resultMap="baseResultMap">
+        select
+        <include refid="Select_Column" />
+        from <include refid="Table_Name" />
+        where 1 = 1
+        <if test="applyHost != null and applyHost != ''" >
+            and apply_host =#{applyHost}
+        </if>
+        <include refid="Where_Sql_No_ApplyHost"></include>
+    </select>
+
+
+</mapper>

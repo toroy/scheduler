@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.TaskMapper" >
+  <resultMap id="BaseResultMap" type="com.clubfactory.platform.scheduler.dal.po.Task" >
+    <id column="id" property="id" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="create_user" property="createUser" />
+    <result column="update_user" property="updateUser" />
+    <result column="retry_count" property="retryCount" />
+    <result column="ip" property="ip" />
+    <result column="alarm_over_time" property="alarmOverTime" />
+    <result column="cluster_id" property="clusterId" />
+    <result column="type" property="type" />
+    <result column="priority" property="priority" />
+    <result column="task_time" property="taskTime" />
+    <result column="job_id" property="jobId" />
+    <result column="score" property="score" />
+    <result column="machine_id" property="machineId" />
+    <result column="log_path" property="logPath" />
+    <result column="name" property="name" />
+    <result column="start_time" property="startTime" />
+    <result column="exec_time" property="execTime" />
+    <result column="end_time" property="endTime" />
+    <result column="category" property="category" />
+    <result column="status" property="status" />
+    <result column="depart_name" property="departName" />
+    <result column="execute_dir" property="executeDir" />
+    <result column="cycle_type" property="cycleType" />
+    <result column="retry_max" property="retryMax" />
+    <result column="is_notice" property="isNotice" />
+    <result column="notice_count" property="noticeCount" />
+    <result column="notice_time" property="noticeTime" />
+    <result column="script_id" property="scriptId" />
+    <result column="is_temp" property="isTemp" />
+    <result column="retry_dur" property="retryDur" />
+    <result column="pid" property="pid" />
+    <result column="emr_cluster_id" property="emrClusterId" />
+      <result column="job_type" property="jobType" />
+
+  </resultMap>
+
+
+  <sql id="Select_Column" >
+   id
+   ,create_time
+    ,update_time
+   ,is_deleted
+   ,create_user
+   ,update_user
+	,retry_count
+	,ip
+	,alarm_over_time
+	,cluster_id
+	,type
+	,priority
+	,job_id
+	,score
+	,machine_id
+	,log_path
+	,name
+	,start_time
+	,exec_time
+	,end_time
+	,category
+	,status
+	,depart_name
+	,execute_dir
+	,task_time
+	,cycle_type
+	,retry_max
+	,is_notice
+	,notice_count
+	,notice_time
+	,script_id
+	,is_temp
+	,retry_dur
+	,pid
+	,emr_cluster_id
+	,job_type
+  </sql>
+
+
+  <sql id="Insert_Column">
+     create_time
+     ,update_time
+     , is_deleted
+     ,create_user
+     ,update_user
+      ,retry_count
+      ,ip
+      ,alarm_over_time
+      ,cluster_id
+      ,type
+      ,priority
+      ,job_id
+      ,score
+      ,machine_id
+      ,log_path
+      ,name
+      ,start_time
+      ,end_time
+      ,category
+      ,status
+      ,depart_name
+      ,task_time
+      ,cycle_type
+      ,retry_max
+      ,is_notice
+	  ,notice_count
+	  ,notice_time
+	  ,script_id
+	  ,is_temp
+	  ,retry_dur
+	  ,pid
+	  ,emr_cluster_id
+	  ,job_type
+  </sql>
+
+<sql id="Insert_Value">
+  #{po.createTime}
+  ,#{po.updateTime}
+  ,#{po.isDeleted}
+  ,#{po.createUser}
+  ,#{po.updateUser}
+    ,#{po.retryCount}
+    ,#{po.ip}
+    ,#{po.alarmOverTime}
+    ,#{po.clusterId}
+    ,#{po.type}
+    ,#{po.priority}
+    ,#{po.jobId}
+    ,#{po.score}
+    ,#{po.machineId}
+    ,#{po.logPath}
+    ,#{po.name}
+    ,#{po.startTime}
+    ,#{po.endTime}
+    ,#{po.category}
+    ,#{po.status}
+    ,#{po.departName}
+    ,#{po.taskTime}
+    ,#{po.cycleType}
+    ,#{po.retryMax}
+    ,#{po.isNotice}
+    ,#{po.noticeCount}
+    ,#{po.noticeTime}
+    ,#{po.scriptId}
+    ,#{po.isTemp}
+    ,#{po.retryDur}
+    ,#{po.pid}
+    ,#{po.emrClusterId}
+    ,#{po.jobType}
+</sql>
+
+
+ <sql id="Single_Where_Sql" >
+    <if test="isDeleted != null" >
+    ${joinStr} is_deleted = #{isDeleted}
+    </if>
+    <if test="retryDur != null" >
+    ${joinStr} retry_dur = #{retryDur}
+    </if>
+    <if test="isTemp != null" >
+    ${joinStr} is_temp = #{isTemp}
+    </if>
+     <if test="createTime != null" >
+    ${joinStr} create_time = #{createTime}
+     </if>
+     <if test="scriptId != null" >
+    ${joinStr} script_id = #{scriptId}
+    </if>
+      <if test="isNotice != null" >
+    ${joinStr} is_notice = #{isNotice}
+     </if>
+      <if test="noticeCount != null" >
+    ${joinStr} notice_count = #{noticeCount}
+     </if>
+      <if test="noticeTime != null" >
+    ${joinStr} notice_time = #{noticeTime}
+     </if>
+     <if test="retryMax != null" >
+    ${joinStr} retry_max = #{retryMax}
+     </if>
+     <if test="retryCount != null" >
+         ${joinStr} retry_count =#{retryCount}
+     </if>
+      <if test="ip != null and ip != ''" >
+        ${joinStr} ip =#{ip}
+     </if>
+     <if test="cycleType != null" >
+        ${joinStr} cycle_type =#{cycleType}
+     </if>
+     <if test="alarmOverTime != null" >
+         ${joinStr} alarm_over_time =#{alarmOverTime}
+     </if>
+     <if test="clusterId != null" >
+         ${joinStr} cluster_id =#{clusterId}
+     </if>
+     <if test="type != null" >
+        ${joinStr} type =#{type}
+     </if>
+     <if test="priority != null" >
+         ${joinStr} priority =#{priority}
+     </if>
+     <if test="jobId != null" >
+         ${joinStr} job_id =#{jobId}
+     </if>
+     <if test="score != null" >
+         ${joinStr} score =#{score}
+     </if>
+     <if test="machineId != null" >
+         ${joinStr} machine_id =#{machineId}
+     </if>
+     <if test="logPath != null and logPath != ''" >
+        ${joinStr} log_path =#{logPath}
+     </if>
+     <if test="name != null and name != ''" >
+        ${joinStr} name like concat("%",#{name},"%")
+     </if>
+     <if test="startTime != null" >
+         ${joinStr} start_time >= #{startTime}
+     </if>
+     <if test="taskTime != null" >
+         ${joinStr} task_time =#{taskTime}
+     </if>
+     <if test="endTime != null" >
+         ${joinStr} end_time =#{endTime}
+     </if>
+     <if test="category != null" >
+        ${joinStr} category =#{category}
+     </if>
+     <if test="status != null" >
+        ${joinStr} status =#{status}
+     </if>
+     <if test="departName != null and departName != ''" >
+        ${joinStr} depart_name =#{departName}
+     </if>
+     <if test="jobType != null" >
+         ${joinStr} job_type =#{jobType}
+     </if>
+</sql>
+
+<sql id="Table_Name" >
+   sc_task
+</sql>
+
+
+      <sql id="Where_Sql" >
+      	<if test="endDate != null and endDate != ''">
+      		<![CDATA[ and start_time < #{endDate} ]]>
+      	</if>
+      	<if test="startDate != null and startDate != ''">
+      		<![CDATA[ and start_time >= #{startDate} ]]>
+      	</if>
+      	<if test="id != null" >
+      		and id = #{id}
+      	</if>
+        <if test="ids != null and ids.size() > 0" >
+          and
+          <choose>
+            <when test="queryListFieldName != null  and queryListFieldName !=''">${queryListFieldName}</when>
+            <otherwise>id</otherwise>
+          </choose>
+          in
+          <foreach collection="ids" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+        </if>
+        <if test="idsString != null and idsString.size() > 0" >
+          and
+          <choose>
+            <when test="queryListFieldName != null  and queryListFieldName !=''">${queryListFieldName}</when>
+            <otherwise>id</otherwise>
+          </choose>
+          in
+          <foreach collection="idsString" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+        </if>
+        <if test="statuses != null and statuses.size() > 0">
+			and status in        
+			 <foreach collection="statuses" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach> 	
+        </if>
+        <include refid="Single_Where_Sql"><property name="joinStr" value="and"/></include>
+    </sql>
+
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+
+    <insert id="saveBatch" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        <foreach item="po" collection="list" separator=",">
+        (
+          <include refid="Insert_Value"/>
+        )
+        </foreach>
+    </insert>
+
+
+  <select id="get" resultMap="BaseResultMap">
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+  </select>
+
+
+  <select id="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" /> 
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+    <if test="orderBy != null and orderBy != ''" >
+    	order by ${orderBy}
+    </if>
+  </select>
+  
+    <select id="listByDelay" resultMap="BaseResultMap" >
+    select <include refid="Select_Column" /> 
+    from (
+	    select
+	    <include refid="Select_Column" />
+	    from <include refid="Table_Name" /> 
+	    <where>
+	    <include refid="Where_Sql"></include>
+	    and type = "SPARK"
+	    and UNIX_TIMESTAMP(end_time) - UNIX_TIMESTAMP(start_time) > 2 * 60 * 60
+	    </where>
+	    union all 
+	    select
+	    <include refid="Select_Column" />
+	    from <include refid="Table_Name" /> 
+	    <where>
+	    <include refid="Where_Sql"></include>
+	    and type != "SPARK"
+	    and UNIX_TIMESTAMP(end_time) - UNIX_TIMESTAMP(start_time) > 30 * 60
+	    </where>
+    ) a
+    <if test="orderBy != null and orderBy != ''" >
+    	order by ${orderBy}
+    </if>
+  </select>
+  
+  
+  
+   <select id="countByDelay" resultType="java.lang.Integer"> 
+    select count(1) 
+     from (
+	    select
+	    <include refid="Select_Column" />
+	    from <include refid="Table_Name" /> 
+	    <where>
+	    <include refid="Where_Sql"></include>
+	    and type = "SPARK"
+	    and UNIX_TIMESTAMP(end_time) - UNIX_TIMESTAMP(start_time) > 2 * 60 * 60
+	    </where>
+	    union all 
+	    select
+	    <include refid="Select_Column" />
+	    from <include refid="Table_Name" /> 
+	    <where>
+	    <include refid="Where_Sql"></include>
+	    and type != "SPARK"
+	    and UNIX_TIMESTAMP(end_time) - UNIX_TIMESTAMP(start_time) > 30 * 60
+	    </where>
+    ) a
+  </select>
+
+
+  <select id="count" resultType="java.lang.Integer">
+      select count(1) from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </select>
+
+
+  <delete id="remove">
+      delete from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+  </delete>
+
+
+  <update id="edit">
+    update <include refid="Table_Name" />
+    <set >
+       update_time = #{updateTime}
+       <if test="updateParam != null" >
+      <foreach collection="updateParam" index="k" item="v">
+        <if test="null != v">
+          , ${k} = #{v}
+        </if>
+      </foreach>
+    </if>
+    </set>
+    <where>
+    <include refid="Where_Sql"></include>
+    </where>
+  </update>
+  
+    <update id="editIfNull">
+    update <include refid="Table_Name" />
+    <set >
+       update_time = #{updateTime}
+       <if test="updateParam != null" >
+      <foreach collection="updateParam" index="k" item="v">
+        , ${k} = #{v}
+      </foreach>
+    </if>
+    </set>
+    <where>
+    <include refid="Where_Sql"></include>
+    </where>
+    
+  </update>
+  
+    <update id="editNotice">
+    update <include refid="Table_Name" />
+    <set >
+       notice_count = notice_count + 1
+       <if test="updateParam != null" >
+      <foreach collection="updateParam" index="k" item="v">
+        <if test="null != v">
+          , ${k} = #{v}
+        </if>
+      </foreach>
+    </if>
+    </set>
+    <where>
+    <include refid="Where_Sql"></include>
+    </where>
+    
+  </update>
+
+  <update id="logicRemove">
+      update <include refid="Table_Name" />
+      <set >
+         update_time = #{updateTime},is_deleted = true
+      </set>
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </update>
+   
+   <select id="listByDateAndJobIds" resultMap="BaseResultMap">
+   		select <include refid="Select_Column" />
+   		from <include refid="Table_Name" />
+   		<where>
+   		 <![CDATA[ start_time >= #{nowDate} ]]>
+   		 and job_id in 
+          <foreach collection="ids" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+    	</where>
+    	
+   </select>
+   
+   <select id="listMaxTask" resultMap="BaseResultMap" >
+	select task.job_id job_id, task.task_time task_time, task.id id 
+	from
+	(select job_id, task_time, id from
+	<include refid="Table_Name" />
+	<where> <![CDATA[ create_time < #{nowDate} ]]>
+        and is_temp = false
+    </where>
+	) task
+	join (
+	select job_id, max(task_time) task_time from
+	<include refid="Table_Name" />
+	<where>
+	    <![CDATA[ create_time < #{nowDate} ]]>
+        and is_temp = false
+	</where>
+	group by job_id) max_task
+	on task.job_id = max_task.job_id
+	and task.task_time = max_task.task_time;
+   </select>
+   
+   <select id="listByDate" resultMap="BaseResultMap" >
+   select
+   		<include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    <where>
+    	<if test="endDate != null and endDate != ''">
+      		<![CDATA[ and task_time < #{endDate} ]]>
+      	</if>
+      	<if test="startDate != null and startDate != ''">
+      		<![CDATA[ and task_time >= #{startDate} ]]>
+      	</if>
+      	and is_deleted = false
+      	and is_temp = false
+    </where>
+   </select>
+   
+   <select id="listByRetryNotice" resultMap="BaseResultMap" >
+   	select
+   		<include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    <where>
+    <![CDATA[
+        status = 'FAILED'
+        and is_deleted = false
+        and retry_count < retry_max
+        and start_time > #{date}
+        and retry_dur is not null
+        ]]>
+     </where>
+   </select>
+   
+   <select id="listByFailedNotice" resultMap="BaseResultMap" >
+   	select
+   		<include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    <where>
+    <![CDATA[
+        status = 'FAILED'
+        and is_deleted = false
+        and retry_count >= retry_max
+        and is_notice = false
+        and start_time > #{date}
+        ]]>
+     </where>
+   </select>
+   
+    <select id="listByDataFailedNotice" resultMap="BaseResultMap" >
+   	select
+   		<include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    <where>
+    <![CDATA[
+        status = 'DATA_FAILED'
+        and is_deleted = false
+        and is_notice = false
+        and start_time > #{date}
+        ]]>
+     </where>
+   </select>
+   
+   <select id="listBySuccessNotice" resultMap="BaseResultMap" >
+   	select
+   		<include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    <where>
+        status = 'SUCCESS'
+        and is_deleted = false
+        and is_notice = false
+        and start_time > #{date}
+     </where>
+   </select>
+   
+   <select id="listByAlarmDelay" resultMap="BaseResultMap" >
+   	select
+   		<include refid="Select_Column" />
+    from (select <include refid="Select_Column" /> from 
+    <include refid="Table_Name" />
+    <where>
+    	is_deleted = false
+    	AND end_time is null
+    	AND start_time > #{date}
+    </where>) task
+    join
+    (select job_id as alarm_job_id 
+      from sc_alarm 
+      where type = "DELAY"
+      and is_deleted = false
+      ) alarm
+    on task.job_id = alarm.alarm_job_id
+   </select>
+   
+   <select id="listByTimeover" resultMap="BaseResultMap" >
+   	select
+   		<include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    <where>
+    	is_deleted = false
+    	 <![CDATA[
+    	and update_time < #{time}
+    	and status = #{status}
+    	 ]]>
+    </where>
+   </select>
+   
+   <select id="listByTaskTime" resultMap="BaseResultMap" >
+   	   	select
+   		<include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    <where>
+    	is_deleted = false
+    		<if test="endDate != null and endDate != ''">
+      		<![CDATA[ and task_time <= #{endDate} ]]>
+      	</if>
+      	<if test="startDate != null and startDate != ''">
+      		<![CDATA[ and task_time >= #{startDate} ]]>
+      	</if>
+      	<if test="isTemp != null" >
+	   	 	and is_temp = #{isTemp}
+	    </if>
+	    <if test="jobId != null" >
+	   	 	and job_id = #{jobId}
+	    </if>
+    </where>
+   
+   </select>
+
+    <update id="setTaskRunning">
+        update <include refid="Table_Name" />
+            <set>
+             retry_count = retry_count+1
+             , status='RUNNING'
+             </set>
+            <where>
+                id = #{id}
+            </where>
+
+    </update>
+   
+     <update id="editByUpdateTime">
+      update <include refid="Table_Name" />
+      <set >
+       <if test="updateParam != null" >
+      <foreach collection="updateParam" index="k" item="v">
+        <if test="null != v">
+          , ${k} = #{v}
+        </if>
+      </foreach>
+    </if>
+    </set>
+      <where>
+      	<if test="ip != null and ip != ''" >
+        	ip = #{ip}
+     	</if>
+     	<if test="status != null" >
+        	and status = #{status}
+     	</if>
+     	<if test="cycleType != null" >
+        	and cycle_type != #{cycleType}
+     	</if>
+      	<if test="endDate != null and endDate != ''">
+      		<![CDATA[ and update_time < #{endDate} ]]>
+      	</if>
+      	<if test="isDeleted != null" >
+    		and is_deleted = #{isDeleted}
+    	</if>
+      	
+      </where>
+   </update>
+   
+   <select id="listInitTaskByDate" resultMap="BaseResultMap">
+   		select
+   		<include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    <where>
+    	is_deleted = false
+    	 <![CDATA[ and create_time >= #{startDate} ]]>
+    </where> 
+   </select>
+
+
+
+
+</mapper>

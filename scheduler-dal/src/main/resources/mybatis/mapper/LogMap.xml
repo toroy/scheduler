@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.LogMapMapper">
+    <resultMap id="baseResultMap" type="com.clubfactory.platform.scheduler.dal.po.LogMap">
+        <id column="id" property="id"/>
+        <result column="task_id" property="taskId"/>
+        <result column="log_name" property="logName"/>
+        <result column="log_path" property="logPath"/>
+        <result column="log_host" property="logHost"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+
+    <sql id="Select_Column">
+        id
+        ,task_id
+        ,log_name
+        ,log_path
+        ,log_host
+        ,create_time
+	    ,update_time
+    </sql>
+
+    <sql id="Insert_Column">
+        task_id
+	    ,log_name
+	    ,log_path
+	    ,log_host
+	    ,create_time
+	    ,update_time
+	</sql>
+
+    <sql id="Insert_Value">
+        #{logMap.taskId}
+        ,#{logMap.logName}
+        ,#{logMap.logPath}
+        ,#{logMap.logHost}
+        ,#{logMap.createTime}
+        ,#{logMap.updateTime}
+    </sql>
+
+
+    <sql id="Table_Name">
+        sc_log_map
+    </sql>
+
+    <insert id="save">
+        insert into <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+    <select id="list" resultMap="baseResultMap" parameterType="java.lang.Long">
+        select <include refid="Select_Column"/>
+        from <include refid="Table_Name"/>
+        where task_id=#{taskId}
+        order by create_time
+    </select>
+
+    <select id="select" resultMap="baseResultMap">
+        select <include refid="Select_Column"/>
+        from <include refid="Table_Name"/>
+        where id=#{logId}
+    </select>
+
+
+</mapper>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.UserGroupRelMapper" >
+  <resultMap id="BaseResultMap" type="com.clubfactory.platform.scheduler.dal.po.UserGroupRel" >
+    <id column="id" property="id" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="create_user" property="createUser" />
+    <result column="update_user" property="updateUser" />
+    <result column="group_id" property="groupId" />
+    <result column="user_info_id" property="userInfoId" />
+  </resultMap>
+
+
+  <sql id="Select_Column" >
+   id
+   ,is_deleted
+   ,create_user
+   ,update_user
+   ,create_time
+   ,update_time
+	,group_id
+	,user_info_id
+  </sql>
+
+
+  <sql id="Insert_Column">
+     create_time
+     ,update_time
+     , is_deleted
+     ,create_user
+     ,update_user
+      ,group_id
+      ,user_info_id
+  </sql>
+
+<sql id="Insert_Value">
+  #{po.createTime}
+  ,#{po.updateTime}
+  ,#{po.isDeleted}
+  ,#{po.createUser}
+  ,#{po.updateUser}
+    ,#{po.groupId}
+    ,#{po.userInfoId}
+</sql>
+
+
+ <sql id="Single_Where_Sql" >
+    <if test="isDeleted != null" >
+    ${joinStr} is_deleted = #{isDeleted}
+    </if>
+     <if test="createTime != null" >
+    ${joinStr} create_time = #{createTime}
+     </if>
+     <if test="createUser != null" >
+    ${joinStr} create_user = #{createUser}
+     </if>
+     <if test="groupId != null" >
+         ${joinStr} group_id =#{groupId}
+     </if>
+     <if test="userInfoId != null" >
+         ${joinStr} user_info_id =#{userInfoId}
+     </if>
+</sql>
+
+<sql id="Table_Name" >
+   sc_user_group_rel
+</sql>
+    <sql id="tbl_user_info">
+        sc_user_info
+    </sql>
+    <sql id="tbl_group_info">
+        sc_group_info
+    </sql>
+
+
+      <sql id="Where_Sql" >
+      <if test="endDate != null and endDate != ''">
+      		<![CDATA[ and create_time < #{endDate} ]]>
+      	</if>
+      	<if test="startDate != null and startDate != ''">
+      		<![CDATA[ and create_time >= #{startDate} ]]>
+      	</if>
+      	<if test="id != null" >
+      		and id = #{id}
+      	</if>
+        <if test="ids != null and ids.size() > 0" >
+          and
+          <choose>
+            <when test="queryListFieldName != null  and queryListFieldName !=''">${queryListFieldName}</when>
+            <otherwise>id</otherwise>
+          </choose>
+          in
+          <foreach collection="ids" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+        </if>
+        <include refid="Single_Where_Sql"><property name="joinStr" value="and"/></include>
+    </sql>
+
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+
+    <insert id="saveBatch">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        <foreach item="po" collection="list" separator=",">
+        (
+          <include refid="Insert_Value"/>
+        )
+        </foreach>
+    </insert>
+
+
+  <select id="get" resultMap="BaseResultMap">
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+  </select>
+
+
+  <select id="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" /> 
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+    <if test="orderBy != null" >
+    	order by ${orderBy}
+    </if>
+  </select>
+
+    <resultMap id="groupInfoMap" type="com.clubfactory.platform.scheduler.dal.po.GroupInfo" >
+        <id column="id" property="id" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_user" property="updateUser" />
+        <result column="group_name" property="groupName" />
+    </resultMap>
+
+    <select id="selectGroupsByUserId" resultMap="groupInfoMap">
+        select
+        g.id as id
+        ,g.is_deleted as is_deleted
+        ,g.create_time as create_time
+        ,g.update_time as update_time
+        ,g.create_user as create_user
+        ,g.update_user as update_user
+        ,g.group_name  as group_name
+        from
+        (
+        select * from
+        <include refid="Table_Name"/>
+        where user_info_id = #{userInfoId}
+        ) r
+        join
+        (
+        select * from
+        <include refid="tbl_group_info"/>
+        where is_deleted = 0
+        ) g
+        on r.group_id = g.id
+    </select>
+
+    <select id="selectGroupInfosByUserIds" resultMap="groupInfoMap">
+        select
+        g.id as id
+        ,g.is_deleted as is_deleted
+        ,g.create_time as create_time
+        ,g.update_time as update_time
+        ,g.create_user as create_user
+        ,g.update_user as update_user
+        ,g.group_name  as group_name
+        from
+        (
+        select * from
+        <include refid="Table_Name"/>
+        where user_info_id in
+        <foreach collection="userIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) r
+        join
+        (
+        select * from
+        <include refid="tbl_group_info"/>
+        where is_deleted = 0
+        ) g
+        on r.group_id = g.id
+    </select>
+
+    <resultMap id="userInfoMap" type="com.clubfactory.platform.scheduler.dal.po.UserInfo" >
+        <id column="id" property="id" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_user" property="createUser" />
+        <result column="update_user" property="updateUser" />
+        <result column="im_robot" property="imRobot" />
+        <result column="name" property="name" />
+        <result column="main_group_id" property="mainGroupId" />
+        <result column="user_id" property="userId" />
+        <result column="phone_no" property="phoneNo" />
+        <result column="email" property="email" />
+    </resultMap>
+
+    <select id="selectUserInfosByGroupId" resultMap="userInfoMap">
+        select
+        u.id as id
+        ,u.is_deleted as is_deleted
+        ,u.create_time as create_time
+        ,u.update_time as update_time
+        ,u.create_user as create_user
+        ,u.update_user as update_user
+        ,u.im_robot  as im_robot
+        ,u.name as name
+        ,u.main_group_id as main_group_id
+        ,u.user_id as user_id
+        ,u.phone_no as phone_no
+        ,u.email as email
+        from
+        (
+        select * from
+        <include refid="Table_Name"/>
+        where group_id = #{groupInfoId}
+        ) r
+        join
+        (
+        select * from
+        <include refid="tbl_user_info"/>
+        where is_deleted = 0
+        ) u
+        on r.user_info_id = u.id
+    </select>
+
+    <select id="selectUserInfosByGroupIds" resultMap="userInfoMap">
+        select
+        u.id as id
+        ,u.is_deleted as is_deleted
+        ,u.create_time as create_time
+        ,u.update_time as update_time
+        ,u.create_user as create_user
+        ,u.update_user as update_user
+        ,u.im_robot  as im_robot
+        ,u.name as name
+        ,u.main_group_id as main_group_id
+        ,u.user_id as user_id
+        ,u.phone_no as phone_no
+        ,u.email as email
+        from
+        (
+        select * from
+        <include refid="Table_Name"/>
+        where group_id in
+        <foreach collection="groupIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) r
+        join
+        (
+        select * from
+        <include refid="tbl_user_info"/>
+        where is_deleted = 0
+        ) u
+        on r.user_info_id = u.id
+    </select>
+
+
+  <select id="count" resultType="java.lang.Integer">
+      select count(1) from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </select>
+
+
+  <delete id="remove">
+      delete from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+  </delete>
+
+
+  <update id="edit">
+    update <include refid="Table_Name" />
+    <set >
+       update_time = #{updateTime}
+       <if test="updateParam != null" >
+      <foreach collection="updateParam" index="k" item="v">
+        <if test="null != v">
+          , ${k} = #{v}
+        </if>
+      </foreach>
+    </if>
+    </set>
+    <where>
+    <include refid="Where_Sql"></include>
+    </where>
+    
+  </update>
+
+  <update id="logicRemove">
+      update <include refid="Table_Name" />
+      <set >
+         update_time = #{updateTime},is_deleted = true
+      </set>
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </update>
+
+
+</mapper>

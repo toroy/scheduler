@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.MacroVarMapper">
+    <resultMap id="baseResultMap" type="com.clubfactory.platform.scheduler.dal.po.MacroVar">
+        <id column="id" property="id"/>
+        <result column="var_name" property="varName"/>
+        <result column="var_expr" property="varExpr"/>
+        <result column="var_desc" property="varDesc"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="is_mask" property="isMask"/>
+    </resultMap>
+
+
+    <sql id="Select_Column">
+        id
+        ,var_name
+        ,var_expr
+        ,var_desc
+	    ,create_time
+	    ,update_time
+	    ,is_mask
+    </sql>
+
+    <sql id="Insert_Column">
+        var_name
+        ,var_expr
+        ,var_desc
+	    ,create_time
+	    ,update_time
+	    ,is_mask
+	</sql>
+
+    <sql id="Insert_Value">
+        #{var.varName}
+        ,#{var.varExpr}
+        ,#{var.varDesc}
+        ,#{var.createTime}
+        ,#{var.updateTime}
+        ,#{var.isMask}
+    </sql>
+
+
+    <sql id="Table_Name">
+        sc_macro_var
+    </sql>
+
+
+    <sql id="Where_Sql" >
+        <if test="id != null" >
+            and id = #{id}
+        </if>
+
+        <if test="createTime != null" >
+            and create_time = #{createTime}
+        </if>
+        <if test="updateTime != null" >
+            and update_time = #{updateTime}
+        </if>
+        <if test="varName != null and varName != '' " >
+            and var_name like concat('%', #{varName},'%')
+        </if>
+        <if test="varExpr != null and varExpr != ''" >
+            and var_expr like concat('%',#{varExpr},'%')
+        </if>
+        <if test="varDesc != null and varDesc != ''" >
+            and var_desc like concat('%', #{varDesc}
+        </if>
+    </sql>
+
+
+
+    <insert id="save">
+        insert into <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+    <update id="update">
+        update <include refid="Table_Name" />
+        <set >
+            update_time = #{updateTime}
+            <if test="updateParam != null" >
+                <foreach collection="updateParam" index="k" item="v">
+                    <if test="null != v">
+                        , ${k} = #{v}
+                    </if>
+                </foreach>
+            </if>
+        </set>
+        <where>
+            <include refid="Where_Sql"></include>
+        </where>
+    </update>
+
+    <delete id="delete">
+        delete from <include refid="Table_Name" />
+        where 1 = 1
+        <include refid="Where_Sql"></include>
+    </delete>
+
+    <select id="list" resultMap="baseResultMap">
+        select
+        <include refid="Select_Column" />
+        from <include refid="Table_Name" />
+        where 1 = 1
+        <include refid="Where_Sql"></include>
+    </select>
+
+
+    <select id="getByName" resultMap="baseResultMap">
+        select
+        <include refid="Select_Column" />
+        from <include refid="Table_Name" />
+        where var_name = #{varName}
+    </select>
+
+
+
+</mapper>

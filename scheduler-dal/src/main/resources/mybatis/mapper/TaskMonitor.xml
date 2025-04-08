@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.TaskMonitorMapper" >
+  <resultMap id="BaseResultMap" type="com.clubfactory.platform.scheduler.dal.po.TaskMonitor" >
+    <id column="id" property="id" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="rm_port" property="rmPort" />
+    <result column="yarn_app_id" property="yarnAppId" />
+    <result column="retry_counts" property="retryCounts" />
+    <result column="rm_host" property="rmHost" />
+    <result column="task_id" property="taskId" />
+    <result column="max_retry_num" property="maxRetryNum" />
+  </resultMap>
+
+
+  <sql id="Select_Column" >
+   id
+   ,create_time
+   ,update_time
+	,rm_port
+	,yarn_app_id
+	,retry_counts
+	,rm_host
+	,task_id
+	,max_retry_num
+  </sql>
+
+
+  <sql id="Insert_Column">
+     create_time
+     ,update_time
+      ,rm_port
+      ,yarn_app_id
+      ,retry_counts
+      ,rm_host
+      ,task_id
+      ,max_retry_num
+  </sql>
+
+<sql id="Insert_Value">
+  #{po.createTime}
+  ,#{po.updateTime}
+    ,#{po.rmPort}
+    ,#{po.yarnAppId}
+    ,#{po.retryCounts}
+    ,#{po.rmHost}
+    ,#{po.taskId}
+    ,#{po.maxRetryNum}
+</sql>
+
+
+ <sql id="Single_Where_Sql" >
+     <if test="createTime != null" >
+    ${joinStr} create_time = #{createTime}
+     </if>
+     <if test="rmPort != null and rmPort != ''" >
+        ${joinStr} rm_port =#{rmPort}
+     </if>
+     <if test="yarnAppId != null and yarnAppId != ''" >
+        ${joinStr} yarn_app_id =#{yarnAppId}
+     </if>
+     <if test="retryCounts != null" >
+         ${joinStr} retry_counts =#{retryCounts}
+     </if>
+     <if test="rmHost != null and rmHost != ''" >
+        ${joinStr} rm_host =#{rmHost}
+     </if>
+     <if test="taskId != null" >
+         ${joinStr} task_id =#{taskId}
+     </if>
+     <if test="maxRetryNum != null">
+         ${joinStr} max_retry_num = #{maxRetryNum}
+     </if>
+</sql>
+
+<sql id="Table_Name" >
+   sc_task_monitor
+</sql>
+
+
+      <sql id="Where_Sql" >
+      <if test="endDate != null and endDate != ''">
+      		<![CDATA[ and create_time < #{endDate} ]]>
+      	</if>
+      	<if test="startDate != null and startDate != ''">
+      		<![CDATA[ and create_time >= #{startDate} ]]>
+      	</if>
+      	<if test="id != null" >
+      		and id = #{id}
+      	</if>
+        <if test="ids != null and ids.size() > 0" >
+          and
+          <choose>
+            <when test="queryListFieldName != null  and queryListFieldName !=''">${queryListFieldName}</when>
+            <otherwise>id</otherwise>
+          </choose>
+          in
+          <foreach collection="ids" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+        </if>
+        <include refid="Single_Where_Sql"><property name="joinStr" value="and"/></include>
+    </sql>
+
+
+    <insert id="save">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+
+    <insert id="saveBatch">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        <foreach item="po" collection="list" separator=",">
+        (
+          <include refid="Insert_Value"/>
+        )
+        </foreach>
+    </insert>
+
+
+  <select id="get" resultMap="BaseResultMap">
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+  </select>
+
+
+  <select id="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" /> 
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+    <if test="orderBy != null" >
+    	order by ${orderBy}
+    </if>
+  </select>
+
+
+  <select id="count" resultType="java.lang.Integer">
+      select count(1) from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </select>
+
+
+  <delete id="remove">
+      delete from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+  </delete>
+
+
+  <update id="edit">
+    update <include refid="Table_Name" />
+    <set >
+       update_time = #{updateTime}
+       <if test="updateParam != null" >
+      <foreach collection="updateParam" index="k" item="v">
+        <if test="null != v">
+          , ${k} = #{v}
+        </if>
+      </foreach>
+    </if>
+    </set>
+    <where>
+    <include refid="Where_Sql"></include>
+    </where>
+    
+  </update>
+
+  <update id="logicRemove">
+      update <include refid="Table_Name" />
+      <set >
+         update_time = #{updateTime}
+      </set>
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </update>
+
+
+</mapper>

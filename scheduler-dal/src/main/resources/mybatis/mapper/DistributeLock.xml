@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.DistributeLockMapper">
+    <resultMap id="baseResultMap" type="com.clubfactory.platform.scheduler.dal.po.DistributeLock">
+        <id column="id" property="id"/>
+        <result column="resource_uniq_id" property="resourceId"/>
+        <result column="remark" property="remark"/>
+        <result column="expire_time" property="expireTime"/>
+    </resultMap>
+
+
+    <sql id="Select_Column">
+        id
+        ,resource_uniq_id
+        ,remark
+        ,expire_time
+    </sql>
+
+    <sql id="Insert_Column">
+        resource_uniq_id
+	    ,remark
+	    ,expire_time
+	</sql>
+
+    <sql id="Insert_Value">
+        #{lockInfo.resourceId}
+        ,#{lockInfo.remark}
+        ,#{lockInfo.expireTime}
+    </sql>
+
+
+    <sql id="Table_Name">
+        sc_distribute_lock
+    </sql>
+
+
+
+
+    <insert id="lock">
+        insert into <include refid="Table_Name"/>
+        (
+            <include refid="Insert_Column"/>
+        )
+        values
+        (
+            <include refid="Insert_Value"/>
+        )
+    </insert>
+
+
+
+
+    <delete id="unlock" parameterType="java.lang.Integer">
+        delete from <include refid="Table_Name"/>
+        where resource_uniq_id = #{resourceId}
+    </delete>
+
+
+    <delete id="clearDeadLock" parameterType="java.lang.Long">
+        delete from <include refid="Table_Name"/>
+        where
+        <![CDATA[ expire_time <= #{currentTime} ]]>
+    </delete>
+    <select id="selectLock" resultMap="baseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Select_Column"/>
+        from <include refid="Table_Name"/>
+        where resource_uniq_id=#{lockInfo.resourceId}
+    </select>
+
+
+</mapper>

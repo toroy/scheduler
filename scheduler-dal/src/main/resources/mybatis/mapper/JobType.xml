@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.JobTypeMapper">
+    <resultMap id="baseResultMap" type="com.clubfactory.platform.scheduler.dal.po.JobType">
+        <id column="id" property="id"/>
+        <result column="plugin_dir" property="pluginDir"/>
+        <result column="plugin_name" property="pluginName"/>
+        <result column="plugin_desc" property="pluginDesc"/>
+        <result column="plugin_clazz" property="pluginClazz"/>
+        <result column="plugin_emr_clazz" property="pluginEmrClazz"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="plugin_alias" property="pluginAlias"/>
+        <result column="category" property="category"/>
+        <result column="is_stream" property="isStream"/>
+        <result column="is_cluster_job" property="isClusterJob"/>
+        <result column="is_support_lineage" property="isSupportLineage"/>
+    </resultMap>
+
+
+    <sql id="Insert_Column">
+        plugin_name
+        ,plugin_desc
+        ,plugin_clazz
+        ,plugin_emr_clazz
+        ,create_time
+	    ,update_time
+	    ,plugin_dir
+	    ,plugin_alias
+	    ,category
+	    ,is_stream
+	    ,is_cluster_job
+	    ,is_support_lineage
+	</sql>
+
+    <sql id="Select_Column">
+        id,
+        <include refid="Insert_Column"/>
+    </sql>
+
+    <sql id="Insert_Value">
+        #{jobType.pluginName}
+        ,#{jobType.pluginDesc}
+        ,#{jobType.pluginClazz}
+        ,#{jobType.pluginEmrClazz}
+        ,#{jobType.createTime}
+        ,#{jobType.updateTime}
+        ,#{jobType.pluginDir}
+        ,#{jobType.pluginAlias}
+        ,#{jobType.category}
+        ,#{jobType.isStream}
+        ,#{jobType.isClusterJob}
+        ,#{jobType.isSupportLineage}
+    </sql>
+
+
+    <sql id="Table_Name">
+        sc_job_type
+    </sql>
+
+    <insert id="save">
+        insert into <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+    <select id="list" resultMap="baseResultMap">
+        select <include refid="Select_Column"/>
+        from <include refid="Table_Name"/>
+        order by create_time
+    </select>
+
+    <select id="select" resultMap="baseResultMap">
+        select <include refid="Select_Column"/>
+        from <include refid="Table_Name"/>
+        where id=#{typeId}
+    </select>
+
+    <select id="selectByName" resultMap="baseResultMap">
+        select <include refid="Select_Column"/>
+        from <include refid="Table_Name"/>
+        where plugin_name=#{pluginName} and category = #{category}
+    </select>
+
+
+</mapper>

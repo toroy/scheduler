@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:log4jdbc:mysql://172.25.16.27:3306/scheduler?characterEncoding=utf8&characterSetResults=utf8
+    username: public_write
+    password: wozaidb@2023
+  mail:
+    username: lijiangzhou@clubfactory.com
+    password: srfvnvhuxoailfon
+
+im:
+  url: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=
+  token: 126180b7-f03d-453a-aabb-460ddf33751e
+
+email:
+  system:
+     "{
+     'gaia_notice01@wholee.sale': 'hbzpdhphlivpypog'
+     }"
+  manager: lijiangzhou@wholeeprime.com
+
+## zk相关配置
+zookeeper:
+  quorum: 172.25.17.25:2181

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.DsStateMapper">
+    <resultMap id="baseResultMap" type="com.clubfactory.platform.scheduler.dal.po.DsState">
+        <id column="id" property="id"/>
+        <id column="ds_id" property="dsId"/>
+        <result column="db_host" property="dbHost"/>
+        <result column="db_port" property="dbPort"/>
+        <result column="db_user" property="dbUser"/>
+        <result column="db_type" property="dbType"/>
+        <result column="worker_ip" property="workerIp"/>
+        <result column="conn_success" property="connSuccess"/>
+        <result column="failed_reason" property="failedReason"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+
+    <sql id="Select_Column">
+        id
+        ,ds_id
+        ,db_host
+        ,db_port
+        ,db_user
+        ,db_type
+        ,worker_ip
+	    ,conn_success
+	    ,failed_reason
+	    ,create_time
+    </sql>
+
+    <sql id="Insert_Column">
+        ds_id
+        ,db_host
+        ,db_port
+        ,db_user
+        ,db_type
+        ,worker_ip
+	    ,conn_success
+	    ,failed_reason
+	    ,create_time
+	</sql>
+
+    <sql id="Insert_Value">
+        #{dsState.dsId}
+        ,#{dsState.dbHost}
+        ,#{dsState.dbPort}
+        ,#{dsState.dbUser}
+        ,#{dsState.dbType}
+        ,#{dsState.workerIp}
+        ,#{dsState.connSuccess}
+        ,#{dsState.failedReason}
+        ,#{dsState.createTime}
+    </sql>
+
+
+    <sql id="Table_Name">
+        sc_ds_state
+    </sql>
+
+
+    <sql id="Where_Sql" >
+        <if test="id != null" >
+            and id = #{id}
+        </if>
+        <if test="dsId != null" >
+            and ds_id = #{dsId}
+        </if>
+        <if test="dbHost!= null and dbHost != ''" >
+            and db_host = #{dbHost}
+        </if>
+        <if test="createTime != null" >
+            and create_time = #{createTime}
+        </if>
+        <if test="dbPort != null" >
+            and db_port = #{dbPort}
+        </if>
+        <if test="dbType != null" >
+            and db_type = #{dbType}
+        </if>
+        <if test="workerIp != null and workerIp != ''" >
+            and worker_ip =#{workerIp}
+        </if>
+        <if test="connSuccess != null" >
+            and conn_success =#{connSuccess}
+        </if>
+        <if test="failedReason != null and failedReason != ''" >
+            and failed_reason like concat('%',#{failedReason},'%')
+        </if>
+    </sql>
+
+
+    <insert id="save">
+        insert into <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+    <insert id="saveBatch">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        <foreach item="dsState" collection="list" separator=",">
+            (
+            <include refid="Insert_Value"/>
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByWorkerIp">
+        delete from <include refid="Table_Name" />
+        where worker_ip = #{workerIp}
+    </delete>
+
+    <select id="list" resultMap="baseResultMap">
+        select <include refid="Select_Column" />
+        from <include refid="Table_Name" />
+        where 1 = 1
+        <include refid="Where_Sql"/>
+    </select>
+
+    <select id="select" resultMap="baseResultMap">
+        select <include refid="Select_Column"/>
+        from <include refid="Table_Name"/>
+        where id=#{id}
+    </select>
+
+
+</mapper>

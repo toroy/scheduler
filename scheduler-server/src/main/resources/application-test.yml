@@ -1,0 +1,22 @@
+zookeeper:
+  quorum: 101.89.54.49:2181
+spring:
+  datasource:
+    url: jdbc:log4jdbc:mysql://sh-cdb-klmhn69y.sql.tencentcdb.com:63592/scheduler
+    username: public_write
+    password: wozaidb@2023
+  mail:
+    username: lijiangzhou@clubfactory.com
+    password: srfvnvhuxoailfon
+
+im:
+  url: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=
+  token: f79af9b0-590d-4f07-af69-8ac7482c7a67
+
+email:
+  system:
+    "{
+     'gaia_notice01@wholee.sale': 'hbzpdhphlivpypog'
+     }"
+  manager: lijiangzhou@wholeeprime.com,soso24w@hotmail.com
+

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.JobReflueMapper" >
+  <resultMap id="BaseResultMap" type="com.clubfactory.platform.scheduler.dal.po.JobReflue" >
+    <id column="id" property="id" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="create_user" property="createUser" />
+    <result column="update_user" property="updateUser" />
+    <result column="target_table" property="targetTable" />
+    <result column="sql_column" property="sqlColumn" />
+    <result column="target_columns" property="targetColumns" />
+    <result column="source_table" property="sourceTable" />
+    <result column="increment_type" property="incrementType" />
+    <result column="where_sql" property="whereSql" />
+    <result column="db_source_id" property="dbSourceId" />
+    <result column="storage_format" property="storageFormat" />
+    <result column="increment_column" property="incrementColumn" />
+    <result column="db_target_id" property="dbTargetId" />
+    <result column="job_id" property="jobId" />
+    <result column="is_sql" property="isSql" />
+    <result column="user_sql" property="userSql" />
+    <result column="split_pk" property="splitPk" />
+    <result column="run_count" property="runCount" />
+    <result column="source_columns" property="sourceColumns" />
+  </resultMap>
+
+
+  <sql id="Select_Column" >
+   id
+   ,is_deleted
+   ,create_user
+   ,update_user
+	,target_table
+	,sql_column
+	,target_columns
+	,source_table
+	,increment_type
+	,where_sql
+	,db_source_id
+	,storage_format
+	,increment_column
+	,db_target_id
+	,job_id
+	,is_sql
+	,user_sql
+	,split_pk
+	,run_count
+	,source_columns
+  </sql>
+
+
+  <sql id="Insert_Column">
+     create_time
+     ,update_time
+     , is_deleted
+     ,create_user
+     ,update_user
+      ,target_table
+      ,sql_column
+      ,target_columns
+      ,source_table
+      ,increment_type
+      ,where_sql
+      ,db_source_id
+      ,storage_format
+      ,increment_column
+      ,db_target_id
+      ,job_id
+      ,is_sql
+      ,user_sql
+      ,split_pk
+      ,run_count
+      ,source_columns
+  </sql>
+
+<sql id="Insert_Value">
+  #{po.createTime}
+  ,#{po.updateTime}
+  ,#{po.isDeleted}
+  ,#{po.createUser}
+  ,#{po.updateUser}
+    ,#{po.targetTable}
+    ,#{po.sqlColumn}
+    ,#{po.targetColumns}
+    ,#{po.sourceTable}
+    ,#{po.incrementType}
+    ,#{po.whereSql}
+    ,#{po.dbSourceId}
+    ,#{po.storageFormat}
+    ,#{po.incrementColumn}
+    ,#{po.dbTargetId}
+    ,#{po.jobId}
+    ,#{po.isSql}
+    ,#{po.userSql}
+    ,#{po.splitPk}
+    ,#{po.runCount}
+    ,#{po.sourceColumns}
+</sql>
+
+
+ <sql id="Single_Where_Sql" >
+    <if test="isDeleted != null" >
+    ${joinStr} is_deleted = #{isDeleted}
+    </if>
+     <if test="createTime != null" >
+    ${joinStr} create_time = #{createTime}
+     </if>
+     <if test="createUser != null" >
+    ${joinStr} create_user = #{createUser}
+     </if>
+     <if test="targetTable != null and targetTable != ''" >
+        ${joinStr} target_table =#{targetTable}
+     </if>
+     <if test="sqlColumn != null and sqlColumn != ''" >
+        ${joinStr} sql_column =#{sqlColumn}
+     </if>
+     <if test="targetColumns != null and targetColumns != ''" >
+        ${joinStr} target_columns =#{targetColumns}
+     </if>
+     <if test="sourceTable != null and sourceTable != ''" >
+        ${joinStr} source_table =#{sourceTable}
+     </if>
+     <if test="incrementType != null and incrementType != ''" >
+        ${joinStr} increment_type =#{incrementType}
+     </if>
+     <if test="whereSql != null and whereSql != ''" >
+        ${joinStr} where_sql =#{whereSql}
+     </if>
+     <if test="dbSourceId != null" >
+         ${joinStr} db_source_id =#{dbSourceId}
+     </if>
+     <if test="storageFormat != null and storageFormat != ''" >
+        ${joinStr} storage_format =#{storageFormat}
+     </if>
+     <if test="incrementColumn != null and incrementColumn != ''" >
+        ${joinStr} increment_column =#{incrementColumn}
+     </if>
+     <if test="dbTargetId != null" >
+         ${joinStr} db_target_id =#{dbTargetId}
+     </if>
+     <if test="jobId != null" >
+         ${joinStr} job_id =#{jobId}
+     </if>
+     <if test="isSql != null and isSql != ''" >
+        ${joinStr} is_sql =#{isSql}
+     </if>
+     <if test="userSql != null and userSql != ''" >
+        ${joinStr} user_sql =#{userSql}
+     </if>
+     <if test="splitPk != null and splitPk != ''" >
+        ${joinStr} split_pk =#{splitPk}
+     </if>
+     <if test="runCount != null" >
+         ${joinStr} run_count =#{runCount}
+     </if>
+     <if test="sourceColumns != null and sourceColumns != ''" >
+        ${joinStr} source_columns =#{sourceColumns}
+     </if>
+</sql>
+
+<sql id="Table_Name" >
+   sc_job_reflue
+</sql>
+
+
+      <sql id="Where_Sql" >
+      <if test="endDate != null and endDate != ''">
+      		<![CDATA[ and create_time < #{endDate} ]]>
+      	</if>
+      	<if test="startDate != null and startDate != ''">
+      		<![CDATA[ and create_time >= #{startDate} ]]>
+      	</if>
+      	<if test="id != null" >
+      		and id = #{id}
+      	</if>
+        <if test="ids != null and ids.size() > 0" >
+          and
+          <choose>
+            <when test="queryListFieldName != null  and queryListFieldName !=''">${queryListFieldName}</when>
+            <otherwise>id</otherwise>
+          </choose>
+          in
+          <foreach collection="ids" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+        </if>
+        <include refid="Single_Where_Sql"><property name="joinStr" value="and"/></include>
+    </sql>
+
+
+    <insert id="save">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+
+    <insert id="saveBatch">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        <foreach item="po" collection="list" separator=",">
+        (
+          <include refid="Insert_Value"/>
+        )
+        </foreach>
+    </insert>
+
+
+  <select id="get" resultMap="BaseResultMap">
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+  </select>
+
+
+  <select id="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" /> 
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+    <if test="orderBy != null" >
+    	order by ${orderBy}
+    </if>
+  </select>
+
+
+    <resultMap id="subscribeMap" type="com.clubfactory.platform.scheduler.dal.dto.SubscribeDto">
+        <result column="table_name" property="tableName" />
+        <result column="db_name" property="dbName" />
+        <result column="db_host" property="dbHost" />
+        <result column="db_type" property="dbType" />
+        <result column="db_source_id" property="dataSourceId" />
+        <result column="job_create_user" property="jobCreateUser" />
+    </resultMap>
+
+    <select id="listSubscribeInfos" resultMap="subscribeMap">
+        select
+        jc.source_table as table_name
+        ,null as db_name
+        ,null as db_host
+        ,null as db_type
+        ,jc.db_source_id as db_source_id
+        ,j.create_user as job_create_user
+        from
+        (
+        select
+        source_table
+        ,db_source_id
+        ,job_id
+        from<include refid="Table_Name"/>
+        where is_deleted = 0
+        and job_id in
+        <foreach collection="jobIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) jc
+        join
+        (
+        select job_id, create_user from sc_job_online where is_deleted = 0
+        and job_id in
+        <foreach collection="jobIds" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        ) j
+        on jc.job_id = j.job_id
+    </select>
+
+
+  <select id="count" resultType="java.lang.Integer">
+      select count(1) from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </select>
+
+
+  <delete id="remove">
+      delete from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+  </delete>
+
+
+  <update id="edit">
+    update <include refid="Table_Name" />
+    <set >
+       update_time = #{updateTime}
+       <if test="updateParam != null" >
+      <foreach collection="updateParam" index="k" item="v">
+        <if test="null != v">
+          , ${k} = #{v}
+        </if>
+      </foreach>
+    </if>
+    </set>
+    <where>
+    <include refid="Where_Sql"></include>
+    </where>
+    
+  </update>
+
+  <update id="logicRemove">
+      update <include refid="Table_Name" />
+      <set >
+         update_time = #{updateTime},is_deleted = true
+      </set>
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </update>
+
+
+</mapper>

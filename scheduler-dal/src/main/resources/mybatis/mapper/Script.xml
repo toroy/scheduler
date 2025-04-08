@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.ScriptMapper" >
+  <resultMap id="BaseResultMap" type="com.clubfactory.platform.scheduler.dal.po.Script" >
+    <id column="id" property="id" />
+    <result column="is_deleted" property="isDeleted" />
+    <result column="create_time" property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="create_user" property="createUser" />
+    <result column="update_user" property="updateUser" />
+    <result column="file_name" property="fileName" />
+    <result column="remark" property="remark" />
+    <result column="script_type" property="scriptType" />
+    <result column="version" property="version" />
+    <result column="file_ext" property="fileExt" />
+    <result column="script_name" property="scriptName" />
+    <result column="script_base_path" property="scriptBasePath" />
+  </resultMap>
+
+
+  <sql id="Select_Column" >
+   id
+    ,create_time
+    ,update_time
+   ,is_deleted
+   ,create_user
+   ,update_user
+	,file_name
+	,remark
+	,script_type
+	,version
+	,file_ext
+	,script_name
+	,script_base_path
+  </sql>
+
+
+  <sql id="Insert_Column">
+     create_time
+     ,update_time
+     , is_deleted
+     ,create_user
+     ,update_user
+      ,file_name
+      ,remark
+      ,script_type
+      ,version
+      ,file_ext
+      ,script_name
+      ,script_base_path
+  </sql>
+
+<sql id="Insert_Value">
+  #{po.createTime}
+  ,#{po.updateTime}
+  ,#{po.isDeleted}
+  ,#{po.createUser}
+  ,#{po.updateUser}
+    ,#{po.fileName}
+    ,#{po.remark}
+    ,#{po.scriptType}
+    ,#{po.version}
+    ,#{po.fileExt}
+    ,#{po.scriptName}
+    ,#{po.scriptBasePath}
+</sql>
+
+
+ <sql id="Single_Where_Sql" >
+    <if test="isDeleted != null" >
+    ${joinStr} is_deleted = #{isDeleted}
+    </if>
+     <if test="createTime != null" >
+    ${joinStr} create_time = #{createTime}
+     </if>
+     <if test="createUser != null" >
+    ${joinStr} create_user = #{createUser}
+     </if>
+     <if test="fileName != null and fileName != ''" >
+        ${joinStr} file_name =#{fileName}
+     </if>
+     <if test="remark != null and remark != ''" >
+        ${joinStr} remark =#{remark}
+     </if>
+     <if test="scriptType != null " >
+         ${joinStr} script_type =#{scriptType}
+     </if>
+     <if test=" version != null and version != 0 " >
+         ${joinStr}  version =#{version}
+     </if>
+     <if test=" fileExt != null and fileExt != '' " >
+         ${joinStr}  file_ext =#{fileExt}
+     </if>
+     <if test=" scriptName != null and scriptName != '' " >
+         ${joinStr}  script_name like concat('%',#{scriptName},'%')
+     </if>
+     <if test=" scriptBasePath != null and scriptBasePath != '' " >
+         ${joinStr}  script_base_path =#{scriptBasePath}
+     </if>
+</sql>
+
+<sql id="Table_Name" >
+   sc_script
+</sql>
+
+
+      <sql id="Where_Sql" >
+      	<if test="id != null" >
+      		and id = #{id}
+      	</if>
+        <if test="ids != null and ids.size() > 0" >
+          and
+          <choose>
+            <when test="queryListFieldName != null  and queryListFieldName !=''">${queryListFieldName}</when>
+            <otherwise>id</otherwise>
+          </choose>
+          in
+          <foreach collection="ids" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+        </if>
+          <if test="idsString != null and idsString.size() > 0" >
+              and
+              <choose>
+                  <when test="queryListFieldName != null  and queryListFieldName !=''">${queryListFieldName}</when>
+                  <otherwise>id</otherwise>
+              </choose>
+              in
+              <foreach collection="idsString" item="item" open="(" separator="," close=")">
+                  #{item}
+              </foreach>
+          </if>
+        <include refid="Single_Where_Sql"><property name="joinStr" value="and"/></include>
+    </sql>
+
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+
+    <insert id="saveBatch">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        <foreach item="po" collection="list" separator=",">
+        (
+          <include refid="Insert_Value"/>
+        )
+        </foreach>
+    </insert>
+
+
+  <select id="get" resultMap="BaseResultMap">
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+  </select>
+
+
+  <select id="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" /> 
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+    order by update_time desc
+  </select>
+
+
+  <select id="count" resultType="java.lang.Integer">
+      select count(1) from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </select>
+
+
+  <delete id="remove">
+      delete from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+  </delete>
+
+
+  <update id="edit">
+    update <include refid="Table_Name" />
+    <set >
+       update_time = #{updateTime}
+       <if test="updateParam != null" >
+      <foreach collection="updateParam" index="k" item="v">
+        <if test="null != v">
+          , ${k} = #{v}
+        </if>
+      </foreach>
+    </if>
+    </set>
+    <where>
+    <include refid="Where_Sql"></include>
+    </where>
+    
+  </update>
+
+  <update id="logicRemove">
+      update <include refid="Table_Name" />
+      <set >
+         update_time = #{updateTime},is_deleted = true
+      </set>
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </update>
+
+    <select id="selectIdByScriptName" resultType="java.lang.Long">
+        select  id from <include refid="Table_Name" />
+        where script_name = #{scriptName}
+        limit 1
+    </select>
+
+
+</mapper>

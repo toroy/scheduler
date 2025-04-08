@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.TaskStatisticMapper" >
+  <resultMap id="BaseResultMap" type="com.clubfactory.platform.scheduler.dal.po.TaskStatistic" >
+    <id column="id" property="id" />
+    <result column="create_time" property="createTime"  />
+    <result column="failed_task_count" property="failedTaskCount" />
+    <result column="task_date" property="taskDate" />
+    <result column="succeed_task_count" property="succeedTaskCount" />
+    <result column="delay_task_count" property="delayTaskCount" />
+    <result column="depart_id" property="departId" />
+    <result column="type" property="type" />
+    <result column="statistic_dim" property="statisticDim" />
+    <result column="succeed_rate" property="succeedRate" />
+    <result column="total_task" property="totalTask" />
+    <result column="depart_name" property="departName" />
+  </resultMap>
+
+
+  <sql id="Select_Column" >
+    id
+    ,create_time
+	,failed_task_count
+	,task_date
+	,succeed_task_count
+	,delay_task_count
+	,depart_id
+	,`type`
+	,statistic_dim
+	,succeed_rate
+	,total_task
+	,depart_name
+  </sql>
+
+
+  <sql id="Insert_Column">
+      create_time
+      ,failed_task_count
+      ,task_date
+      ,succeed_task_count
+      ,delay_task_count
+      ,depart_id
+      ,`type`
+      ,statistic_dim
+      ,succeed_rate
+      ,total_task
+      ,depart_name
+  </sql>
+
+<sql id="Insert_Value">
+     #{po.createTime}
+    ,#{po.failedTaskCount}
+    ,#{po.taskDate}
+    ,#{po.succeedTaskCount}
+    ,#{po.delayTaskCount}
+    ,#{po.departId}
+    ,#{po.type}
+    ,#{po.statisticDim}
+    ,#{po.succeedRate}
+    ,#{po.totalTask}
+    ,#{po.departName}
+</sql>
+
+
+ <sql id="Single_Where_Sql" >
+     <if test="createTime != null" >
+    ${joinStr} create_time = #{createTime}
+     </if>
+     <if test="failedTaskCount != null" >
+         ${joinStr} failed_task_count =#{failedTaskCount}
+     </if>
+     <if test="taskDate != null and taskDate != ''" >
+        ${joinStr} task_date =#{taskDate}
+     </if>
+     <if test="succeedTaskCount != null" >
+         ${joinStr} succeed_task_count =#{succeedTaskCount}
+     </if>
+     <if test="delayTaskCount != null" >
+         ${joinStr} delay_task_count =#{delayTaskCount}
+     </if>
+     <if test="departId != null" >
+         ${joinStr} depart_id =#{departId}
+     </if>
+     <if test="type != null" >
+        ${joinStr} `type` =#{type}
+     </if>
+     <if test="statisticDim != null" >
+        ${joinStr} statistic_dim =#{statisticDim}
+     </if>
+     <if test="succeedRate != null and succeedRate != ''" >
+        ${joinStr} succeed_rate =#{succeedRate}
+     </if>
+     <if test="totalTask != null" >
+         ${joinStr} total_task =#{totalTask}
+     </if>
+     <if test="departName != null and departName != ''" >
+        ${joinStr} depart_name =#{departName}
+     </if>
+</sql>
+
+<sql id="Table_Name" >
+   sc_task_statistic
+</sql>
+
+
+      <sql id="Where_Sql" >
+      <if test="endDate != null and endDate != ''">
+      		<![CDATA[ and task_date < #{endDate} ]]>
+      	</if>
+      	<if test="startDate != null and startDate != ''">
+      		<![CDATA[ and task_date >= #{startDate} ]]>
+      	</if>
+      	<if test="id != null" >
+      		and id = #{id}
+      	</if>
+        <if test="ids != null and ids.size() > 0" >
+          and
+          <choose>
+            <when test="queryListFieldName != null  and queryListFieldName !=''">${queryListFieldName}</when>
+            <otherwise>id</otherwise>
+          </choose>
+          in
+          <foreach collection="ids" item="item" open="(" separator="," close=")">
+              #{item}
+          </foreach>
+        </if>
+        <include refid="Single_Where_Sql"><property name="joinStr" value="and"/></include>
+    </sql>
+
+
+    <insert id="save">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values (
+        <include refid="Insert_Value"/>
+        )
+    </insert>
+
+
+    <insert id="saveBatch">
+        insert into
+        <include refid="Table_Name"/>
+        (
+        <include refid="Insert_Column"/>
+        )
+        values
+        <foreach item="po" collection="list" separator=",">
+        (
+          <include refid="Insert_Value"/>
+        )
+        </foreach>
+    </insert>
+
+
+    <select id="get" resultMap="BaseResultMap">
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" />
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+  </select>
+
+
+  <select id="list" resultMap="BaseResultMap" >
+    select
+    <include refid="Select_Column" />
+    from <include refid="Table_Name" /> 
+    where 1 = 1
+    <include refid="Where_Sql"></include>
+    order by task_date desc
+  </select>
+
+
+  <select id="count" resultType="java.lang.Integer">
+      select count(1) from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </select>
+
+
+    <delete id="remove">
+      delete from <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+  </delete>
+
+
+  <update id="edit">
+    update <include refid="Table_Name" />
+    <set >
+       <if test="updateParam != null" >
+      <foreach collection="updateParam" index="k" item="v">
+        <if test="null != v">
+          , ${k} = #{v}
+        </if>
+      </foreach>
+    </if>
+    </set>
+    <where>
+    <include refid="Where_Sql"></include>
+    </where>
+    
+  </update>
+
+  <update id="logicRemove">
+      update <include refid="Table_Name" />
+      where 1 = 1
+      <include refid="Where_Sql"></include>
+   </update>
+
+
+    <insert id="statisticOverviewByDate" >
+        insert into sc_task_statistic(
+            create_time
+            ,failed_task_count
+            ,task_date
+            ,succeed_task_count
+            ,delay_task_count
+            ,depart_id
+            ,`type`
+            ,statistic_dim
+            ,succeed_rate
+            ,total_task
+            ,depart_name
+        )
+        select
+        #{createTime} as create_time
+        ,t.failed_task_count as failed_task_count
+        ,t.task_date as task_date
+        ,t.succeed_task_count as succeed_task_count
+        ,t.delay_task_count as delay_task_count
+        ,null as depart_id
+        ,null as `type`
+        ,'DATE' as statistic_dim
+        ,round(t.succeed_task_count / t.total_task * 100, 2) as succeed_rate
+        ,t.total_task as total_task
+        ,null as depart_name
+        from (
+            select
+                t1.task_date
+                ,count(1) as total_task
+                ,count(
+                    case
+                    when t1.status = 'FAILED' or t1.status = 'KILLED' or t1.status = 'DATA_FAILED' then 1
+                    else null
+                    end
+                ) as failed_task_count
+                ,count(
+                    case
+                    when t1.status = 'SUCCESS'  then 1
+                    else null
+                    end
+                ) as succeed_task_count
+                ,count(
+                    case
+                    when t1.start_time is not null
+                         and ( t1.exec_time is null or DATE_ADD(t1.start_time,INTERVAL #{allowDelayMinute} MINUTE) &lt; t1.exec_time )  then 1
+                    else null
+                    end
+                ) as delay_task_count
+            from
+            (
+                select
+                    start_time
+                    ,DATE_FORMAT(start_time,'%Y-%m-%d') as task_date
+                    ,status as status
+                    ,exec_time
+                from sc_task
+                where is_deleted = 0  and is_temp = 0
+                    <if test="startTime != null and startTime != '' and endTime != null and endTime != '' ">
+                        and (start_time between #{startTime} and #{endTime})
+                    </if>
+            ) t1
+            group by t1.task_date
+        ) t
+
+    </insert>
+    <insert id="statisticOverviewByTaskType">
+        insert into  sc_task_statistic(
+            create_time
+            ,failed_task_count
+            ,task_date
+            ,succeed_task_count
+            ,delay_task_count
+            ,depart_id
+            ,`type`
+            ,statistic_dim
+            ,succeed_rate
+            ,total_task
+            ,depart_name
+        )
+        select
+            #{createTime} as create_time
+            ,t.failed_task_count as failed_task_count
+            ,t.task_date as task_date
+            ,t.succeed_task_count as succeed_task_count
+            ,t.delay_task_count as delay_task_count
+            ,null as depart_id
+            ,t.task_type as `type`
+            ,'TASKTYPE' as statistic_dim
+            ,round(t.succeed_task_count / t.total_task * 100, 2) as succeed_rate
+            ,t.total_task as total_task
+            ,null as depart_name
+        from (
+            select
+                t1.task_date
+                ,t1.task_type
+                ,count(1) as total_task
+                ,count(
+                    case
+                    when t1.status = 'FAILED' or t1.status = 'KILLED' or t1.status = 'DATA_FAILED' then 1
+                    else null
+                end
+                ) as failed_task_count
+                ,count(
+                    case
+                    when t1.status = 'SUCCESS'  then 1
+                    else null
+                end
+                ) as succeed_task_count
+                ,count(
+                    case
+                    when t1.start_time is not null
+                    and ( t1.exec_time is null or DATE_ADD(t1.start_time,INTERVAL #{allowDelayMinute} MINUTE) &lt; t1.exec_time ) then 1
+                    else null
+                end
+                ) as delay_task_count
+            from
+            (
+                select
+                    start_time
+                    ,DATE_FORMAT(start_time,'%Y-%m-%d') as task_date
+                    ,status as status
+                    ,exec_time
+                    ,concat(category,'_',`type`) as task_type
+                from sc_task
+                where is_deleted = 0  and is_temp = 0
+                    <if test="startTime != null and startTime != '' and endTime != null and endTime != '' ">
+                        and (start_time between #{startTime} and #{endTime})
+                    </if>
+            ) t1
+            group by t1.task_date,t1.task_type
+        ) t
+    </insert>
+    <insert id="statisticOverviewByTeam">
+        insert into sc_task_statistic(
+            create_time
+            ,failed_task_count
+            ,task_date
+            ,succeed_task_count
+            ,delay_task_count
+            ,depart_id
+            ,`type`
+            ,statistic_dim
+            ,succeed_rate
+            ,total_task
+            ,depart_name
+        )
+        select
+            #{createTime} as create_time
+            ,t.failed_task_count as failed_task_count
+            ,t.task_date as task_date
+            ,t.succeed_task_count as succeed_task_count
+            ,t.delay_task_count as delay_task_count
+            ,t.depart_id as depart_id
+            ,null as `type`
+            ,'DEPT' as statistic_dim
+            ,round(t.succeed_task_count / t.total_task * 100, 2) as succeed_rate
+            ,t.total_task as total_task
+            ,t.depart_name as depart_name
+        from (
+            select
+                t1.task_date
+                ,t1.depart_id
+                ,t1.depart_name
+                ,count(1) as total_task
+                ,count(
+                    case
+                    when t1.status = 'FAILED' or t1.status = 'KILLED' or t1.status = 'DATA_FAILED' then 1
+                    else null
+                    end
+                ) as failed_task_count
+                ,count(
+                    case
+                    when t1.status = 'SUCCESS'  then 1
+                    else null
+                    end
+                ) as succeed_task_count
+                ,count(
+                    case
+                    when t1.start_time is not null
+                    and ( t1.exec_time is null or DATE_ADD(t1.start_time,INTERVAL #{allowDelayMinute} MINUTE) &lt; t1.exec_time ) then 1
+                    else null
+                end
+                ) as delay_task_count
+            from
+            (
+
+                select
+                    a.start_time
+                    ,a.task_date
+                    ,a.status
+                    ,a.exec_time
+                    ,b.depart_id
+                    ,b.depart_name
+                from
+                (
+                    select
+                        start_time
+                        ,DATE_FORMAT(start_time,'%Y-%m-%d') as task_date
+                        ,create_user as user_id
+                        ,status as status
+                        ,exec_time
+                    from sc_task
+                    where is_deleted = 0  and is_temp = 0
+                        <if test="startTime != null and startTime != '' and endTime != null and endTime != '' ">
+                            and (start_time between #{startTime} and #{endTime})
+                        </if>
+                ) a
+                left join
+                (
+                    select
+                        id
+                        ,depart_id
+                        ,depart_name
+                    from sc_user
+                ) b
+                on a.user_id = b.id
+            ) t1
+            group by t1.task_date,t1.depart_id,t1.depart_name
+        ) t
+    </insert>
+
+    <select id="getMaxDateWithDim" resultType="java.lang.String">
+        select DATE_FORMAT(max(task_date) ,'%Y-%m-%d') from sc_task_statistic where statistic_dim = #{statisticDim}
+    </select>
+
+    <select id="getMinTaskDate" resultType="java.lang.String">
+        select DATE_FORMAT(min(start_time) ,'%Y-%m-%d') from sc_task
+    </select>
+
+    <delete id="deleteFromSpecificDay" parameterType="java.lang.String">
+        delete from <include refid="Table_Name"/>
+        where  <![CDATA[ create_time >= #{startTime} ]]>
+    </delete>
+
+</mapper>

@@ -1,0 +1,43 @@
+{
+  "columnDto": {
+    "incrementColumn": "pt=3",
+    "incrementType": "ADD",
+    "isSql": false,
+    "sourceColumns": [
+      "a",
+      "b"
+    ],
+    "splitPk": "pid",
+    "sql": "select * from test",
+    "sqlColumn": "a,b",
+    "targetColumns": [
+      "a",
+      "b"
+    ],
+    "where": "pt='2020-01-01' "
+  },
+  "params": "a=1,c=2",
+  "runCount": 3,
+  "sourceDsUrl": "mysql://172.16.254.40:3306",
+  "sourceTable": "source_table",
+  "storageFormat": "ORC",
+  "targetDsUrl": "mysql://172.16.254.40:3306",
+  "targetTable": "target_table",
+  "taskTime": "2020-12-12 11:11:11",
+  "sourceDb": {
+    "dsUrl": "mysql://172.16.254.40:3306",
+    "dsUser": "db_username",
+    "dsPassword": "db_password",
+    "dbName": "db_name",
+    "dsType": "mysql",
+    "dsHost": "www.redshift.com"
+  },
+  "targetDb": {
+    "dsUrl": "mysql://172.16.254.40:3306",
+    "dsUser": "db_username",
+    "dsPassword": "db_password",
+    "dbName": "target_db",
+    "dsType": "mysql",
+    "dsHost": "www.mysql.com"
+  }
+}

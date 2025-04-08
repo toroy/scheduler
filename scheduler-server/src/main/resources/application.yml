@@ -1,0 +1,202 @@
+spring:
+  autoconfigure:
+    exclude: com.clubfactory.boot.autoconfigure.datasource.RoutableDataSourceStrategyAutoConfiguration
+  application:
+    name: scheduler
+  profiles:
+    active:
+#    -  '@profileActive@'
+    - dev
+
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+    test-connection: false
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    continue-on-error: true
+    druid:
+      driver-class-name: net.sf.log4jdbc.DriverSpy
+      web-stat-filter:
+        enabled: false
+      filter:
+        config:
+          enabled: true
+      connection-init-sqls: set names utf8mb4
+      max-pool-prepared-statement-per-connection-size: 20
+      initial-size: 5
+      min-idle: 1
+      max-active: 50
+      max-wait: 600000
+
+server:
+  port: 9080
+
+## task被调度到被执行中间允许的延迟时间，单位：分钟
+task:
+  exec:
+    allow:
+      delay-minutes: 30
+  logger:
+    uri: /#/app/task-management/log-view/
+        
+
+## mybatis
+mybatis:
+  config-location: classpath:mybatis/mybatis.xml
+  mapper-locations: classpath*:mybatis/mapper/**/*.xml
+
+## worker配置
+worker:
+  exec:
+    threads: 10
+  heartbeat:
+    interval: 60
+  kill:
+    threads: 2
+  max:
+    cpu-load:
+      avg:
+  reserved:
+    memory: "0.7"   ## 预留700M内存,防止Worker被杀
+
+## zk相关配置
+zookeeper:
+  session:
+    timeout: 300
+  connection:
+    #    配置断网后ZK连接状态变为LOST的间隔，单位：s
+    timeout: 30
+  retry:
+    interval: 1000
+    max-times: 5
+  scheduler:
+    workers:
+      path: /platform/scheduler/workers
+    task:
+      instance:
+        path: /platform/scheduler/task
+      lock:
+        root-path: /platform/scheduler/task_locks
+    leader:
+       path: /platform/scheduler/leader
+  
+pagehelper:
+    helperDialect: mysql
+
+
+etl:
+  task:
+    time-out: 3600  # 单位：s
+
+
+db:
+  conn:
+    test:
+      timeout: 5   #单位：秒
+    
+    
+process:
+  exec:
+    base-path: /tmp/scheduler/exec/
+    multi-tenant:
+      mode:
+        startup:
+          state: false
+
+
+## 公共配置
+data:
+  storage:
+    dfs:
+      base-path: /data_platform/scheduler-data
+
+## 脚本资源保存
+dfs:
+  super:
+    user: hdfs
+resource:
+  storage:
+    dfs:
+      # HDFS,S3,OSS,COS
+      type: COS
+fs:
+  #  s3的配置
+  #  defaultFS: s3a://cfdp-new
+  defaultFS: cosn://gaia-1318812101
+  s3a:
+    endpoint: s3.us-west-2.amazonaws.com
+    access:
+      key:
+    secret:
+      key:
+    connection:
+      maximum: 150
+      establish:
+        timeout: 5000 # 单位:ms
+      timeout: 200000 # 单位:ms
+    attempts:
+      maximum: 20
+    threads:
+      max: 10
+      keepalivetime: 60 #单位：s
+  oss:
+    endpoint:
+    access-key-id:
+    access-key-secret:
+    security-token:
+    multipart:
+      download:
+        size:           # 102400
+
+hadoop:
+  kerberos:
+    authentication:
+      enable: false
+
+java:
+  security:
+    krb5:
+      conf:
+        path: /etc/krb5.conf
+login:
+  user:
+    keytab:
+      username: hdfs@EMR.COM
+      path: /opt/hdfs.keytab
+
+logging:
+  file:
+    path: ${user.home}/logs/${spring.application.name}
+  level:
+    root: info
+
+yarn:
+  super:
+    user: hadoop
+  rm:
+    ha:
+      hosts: rm1,rm2,rm3
+    http:
+      port: 8088
+
+scheduler:
+  env:
+    path: /root/opt/scheduler-server/conf/.scheduler_profile
+
+#voice:
+#  secret:
+#  app:
+#    id: 1400820745
+
+club-boot:
+  vms:
+    enable: true

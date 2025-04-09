@@ -3,7 +3,6 @@ package com.clubfactory.platform.scheduler.server.alarm;
 import com.clubfactory.boot.autoconfigure.vms.VmsProxy;
 import com.clubfactory.platform.common.util.Assert;
 import com.clubfactory.platform.scheduler.core.proxy.LettuceProxy;
-//import com.clubfactory.platform.scheduler.core.proxy.VoiceProxy;
 import com.clubfactory.platform.scheduler.core.vo.JobOnlineVO;
 import com.clubfactory.platform.scheduler.core.vo.TaskVO;
 import com.google.common.collect.Lists;

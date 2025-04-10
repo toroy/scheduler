@@ -5,10 +5,10 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import com.clubfactory.platform.scheduler.common.util.Assert;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
 
-import com.clubfactory.platform.common.util.Assert;
 import com.clubfactory.platform.scheduler.core.vo.UserVO;
 import com.clubfactory.platform.scheduler.dal.dao.UserMapper;
 import com.clubfactory.platform.scheduler.dal.po.User;

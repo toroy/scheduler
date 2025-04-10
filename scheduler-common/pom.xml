@@ -11,9 +11,39 @@
 	</parent>
 	<artifactId>scheduler-common</artifactId>
 	<dependencies>
+<!--		<dependency>-->
+<!--			<groupId>com.wholee.platform</groupId>-->
+<!--			<artifactId>scheduler-dal</artifactId>-->
+<!--		</dependency>-->
+
 		<dependency>
-			<groupId>com.wholee.platform</groupId>
-			<artifactId>scheduler-dal</artifactId>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+			<version>5.1.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.9</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.9.4</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>28.1-jre</version>
 		</dependency>
 		<dependency>
 			<groupId>com.github.oshi</groupId>

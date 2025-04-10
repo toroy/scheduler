@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import com.clubfactory.platform.scheduler.common.util.Assert;
 import org.apache.commons.collections.CollectionUtils;
 import org.markdown4j.Markdown4jProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.clubfactory.platform.common.util.Assert;
 import com.clubfactory.platform.scheduler.core.vo.JobOnlineVO;
 import com.clubfactory.platform.scheduler.core.vo.TaskVO;
 import com.clubfactory.platform.scheduler.server.alarm.dto.InvalidEmailDto;

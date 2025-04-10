@@ -1,14 +1,14 @@
-package com.clubfactory.platform.scheduler.common.utils;
+package com.clubfactory.platform.scheduler.core.utils;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
+import com.clubfactory.platform.scheduler.common.util.DateUtil;
 import org.apache.commons.collections.CollectionUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.clubfactory.platform.common.constant.DateFormatPattern;
-import com.clubfactory.platform.common.util.DateUtil;
+import com.clubfactory.platform.scheduler.common.constant.DateFormatPattern;
 import com.clubfactory.platform.scheduler.dal.dto.SchedulerTimeDto;
 import com.clubfactory.platform.scheduler.dal.enums.JobCycleTypeEnum;
 import com.clubfactory.platform.scheduler.dal.po.JobOnline;

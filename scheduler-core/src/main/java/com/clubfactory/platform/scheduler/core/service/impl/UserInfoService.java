@@ -1,15 +1,12 @@
 package com.clubfactory.platform.scheduler.core.service.impl;
 
-import com.clubfactory.platform.common.util.Assert;
-import com.clubfactory.platform.scheduler.core.utils.StringUtil;
+import com.clubfactory.platform.scheduler.common.util.Assert;
 import com.clubfactory.platform.scheduler.core.vo.UserGroupRelVO;
 import com.clubfactory.platform.scheduler.core.vo.UserInfoVO;
 import com.clubfactory.platform.scheduler.dal.dao.UserInfoMapper;
 import com.clubfactory.platform.scheduler.dal.enums.AlarmNoticeTypeEnum;
-import com.clubfactory.platform.scheduler.dal.enums.AlarmTypeEnum;
 import com.clubfactory.platform.scheduler.dal.po.UserGroupRel;
 import com.clubfactory.platform.scheduler.dal.po.UserInfo;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

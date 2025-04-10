@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import com.alibaba.fastjson.JSON;
+import com.clubfactory.platform.scheduler.common.util.Assert;
 import com.clubfactory.platform.scheduler.core.vo.SlotMap;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -15,7 +16,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.shaded.com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
 
-import com.clubfactory.platform.common.util.Assert;
 import com.clubfactory.platform.scheduler.core.vo.MachineVO;
 import com.clubfactory.platform.scheduler.dal.dao.MachineMapper;
 import com.clubfactory.platform.scheduler.dal.enums.CommonStatus;

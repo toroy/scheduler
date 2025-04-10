@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
-import com.clubfactory.platform.scheduler.common.utils.TaskDependsUtil;
+import com.clubfactory.platform.scheduler.core.utils.TaskDependsUtil;
 import com.clubfactory.platform.scheduler.core.service.impl.JobOnlineService;
 import com.clubfactory.platform.scheduler.core.service.impl.TaskDependsService;
 import com.clubfactory.platform.scheduler.core.service.impl.TaskService;

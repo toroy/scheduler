@@ -1,10 +1,10 @@
 package com.clubfactory.platform.scheduler.common.utils.placeholder;
 
 import com.alibaba.fastjson.JSONObject;
-import com.clubfactory.platform.common.util.DateUtil;
 import com.clubfactory.platform.scheduler.common.Constants;
 import com.clubfactory.platform.scheduler.common.enums.DataType;
 import com.clubfactory.platform.scheduler.common.enums.SystemDateType;
+import com.clubfactory.platform.scheduler.common.util.DateUtil;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;

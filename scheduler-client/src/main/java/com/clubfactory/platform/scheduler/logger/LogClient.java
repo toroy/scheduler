@@ -1,7 +1,7 @@
 package com.clubfactory.platform.scheduler.logger;
 
 import com.alibaba.fastjson.JSON;
-import com.clubfactory.platform.common.exception.BizException;
+import com.clubfactory.platform.scheduler.common.exception.BizException;
 import com.clubfactory.platform.scheduler.logger.grpc.*;
 import com.clubfactory.platform.scheduler.logger.vo.DBConnVO;
 import com.clubfactory.platform.scheduler.logger.vo.LogVO;

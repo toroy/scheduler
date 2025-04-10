@@ -18,7 +18,7 @@
 
 		<dependency>
 			<groupId>com.wholee.platform</groupId>
-			<artifactId>common-utils</artifactId>
+			<artifactId>scheduler-common</artifactId>
 		</dependency>
 
 		<dependency>

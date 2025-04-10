@@ -1,7 +1,7 @@
 package com.clubfactory.platform.scheduler.dal.enums;
 
-import com.clubfactory.platform.common.util.Assert;
 
+import com.clubfactory.platform.scheduler.common.util.Assert;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import com.clubfactory.platform.common.exception.BizException;
+import com.clubfactory.platform.scheduler.common.exception.BizException;
 import com.clubfactory.platform.scheduler.common.utils.DateUtils;
 import com.clubfactory.platform.scheduler.common.utils.OSUtils;
 import com.clubfactory.platform.scheduler.core.service.ICommonService;

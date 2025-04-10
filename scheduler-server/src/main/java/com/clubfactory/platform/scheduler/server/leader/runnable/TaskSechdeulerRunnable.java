@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 
 import com.alibaba.fastjson.JSON;
-import com.clubfactory.platform.common.bean.tuple.Tuple2;
+import com.clubfactory.platform.scheduler.common.bean.tuple.Tuple2;
 import com.clubfactory.platform.scheduler.core.enums.CommandType;
 import com.clubfactory.platform.scheduler.core.utils.NumberUtils;
 import com.clubfactory.platform.scheduler.core.utils.SysConfigUtil;

@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import com.alibaba.fastjson.JSON;
-import com.clubfactory.platform.common.util.Assert;
 
+import com.clubfactory.platform.scheduler.common.util.Assert;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

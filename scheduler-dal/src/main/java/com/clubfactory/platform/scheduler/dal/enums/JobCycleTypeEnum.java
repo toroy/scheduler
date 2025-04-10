@@ -9,9 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import com.clubfactory.platform.common.constant.DateFormatPattern;
-import com.clubfactory.platform.common.util.Assert;
-import com.clubfactory.platform.common.util.DateUtil;
+import com.clubfactory.platform.scheduler.common.constant.DateFormatPattern;
+import com.clubfactory.platform.scheduler.common.util.Assert;
+import com.clubfactory.platform.scheduler.common.util.DateUtil;
 import com.clubfactory.platform.scheduler.dal.dto.SchedulerTimeDto;
 import com.clubfactory.platform.scheduler.dal.dto.TaskTimeDto;
 import com.google.common.collect.Lists;

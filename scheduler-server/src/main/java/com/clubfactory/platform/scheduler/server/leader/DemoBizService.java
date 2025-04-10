@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.clubfactory.platform.common.exception.BizException;
+import com.clubfactory.platform.scheduler.common.exception.BizException;
 import com.clubfactory.platform.scheduler.core.service.impl.DemoService;
 import com.clubfactory.platform.scheduler.core.vo.DemoVO;
 import com.clubfactory.platform.scheduler.dal.po.Demo;

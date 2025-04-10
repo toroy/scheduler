@@ -2,8 +2,8 @@ package com.clubfactory.platform.scheduler.server.alarm;
 
 import java.util.Date;
 
-import com.clubfactory.platform.common.constant.DateFormatPattern;
-import com.clubfactory.platform.common.util.DateUtil;
+import com.clubfactory.platform.scheduler.common.constant.DateFormatPattern;
+import com.clubfactory.platform.scheduler.common.util.DateUtil;
 import com.clubfactory.platform.scheduler.core.vo.JobOnlineVO;
 import com.clubfactory.platform.scheduler.core.vo.TaskVO;
 import com.clubfactory.platform.scheduler.dal.po.Task;

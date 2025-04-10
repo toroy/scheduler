@@ -1,6 +1,6 @@
 package com.clubfactory.platform.scheduler.core.service.impl;
 
-import com.clubfactory.platform.common.util.Assert;
+import com.clubfactory.platform.scheduler.common.util.Assert;
 import com.clubfactory.platform.scheduler.core.vo.MacroVarVO;
 import com.clubfactory.platform.scheduler.dal.dao.MacroVarMapper;
 import com.clubfactory.platform.scheduler.dal.po.MacroVar;

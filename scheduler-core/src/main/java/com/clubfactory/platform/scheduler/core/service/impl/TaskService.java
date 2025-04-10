@@ -12,18 +12,17 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import com.clubfactory.platform.scheduler.common.util.Assert;
+import com.clubfactory.platform.scheduler.common.util.DateUtil;
 import com.clubfactory.platform.scheduler.dal.enums.JobTypeEnum;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.shaded.com.google.common.collect.Lists;
 import org.apache.curator.shaded.com.google.common.collect.Maps;
 import org.apache.curator.shaded.com.google.common.collect.Sets;
 import org.springframework.stereotype.Service;
 
-import com.clubfactory.platform.common.bean.PageUtils;
-import com.clubfactory.platform.common.constant.DateFormatPattern;
-import com.clubfactory.platform.common.util.Assert;
-import com.clubfactory.platform.common.util.DateUtil;
+import com.clubfactory.platform.scheduler.common.bean.PageUtils;
+import com.clubfactory.platform.scheduler.common.constant.DateFormatPattern;
 import com.clubfactory.platform.scheduler.core.vo.TaskVO;
 import com.clubfactory.platform.scheduler.dal.dao.TaskMapper;
 import com.clubfactory.platform.scheduler.dal.enums.JobCycleTypeEnum;

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.clubfactory.platform.common.bean.Pager;
+import com.clubfactory.platform.scheduler.common.bean.Pager;
 
 import lombok.Data;
 

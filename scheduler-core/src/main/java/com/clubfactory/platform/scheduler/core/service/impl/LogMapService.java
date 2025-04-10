@@ -1,6 +1,6 @@
 package com.clubfactory.platform.scheduler.core.service.impl;
 
-import com.clubfactory.platform.common.util.Assert;
+import com.clubfactory.platform.scheduler.common.util.Assert;
 import com.clubfactory.platform.scheduler.dal.dao.LogMapMapper;
 import com.clubfactory.platform.scheduler.dal.po.LogMap;
 import org.springframework.stereotype.Service;

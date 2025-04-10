@@ -10,17 +10,16 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import com.clubfactory.platform.common.exception.BizException;
+import com.clubfactory.platform.scheduler.common.exception.BizException;
+import com.clubfactory.platform.scheduler.common.util.BeanUtil;
 import com.clubfactory.platform.scheduler.server.utils.GuavaCacheUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.clubfactory.platform.common.util.BeanUtil;
 import com.clubfactory.platform.scheduler.core.service.impl.AlarmService;
 import com.clubfactory.platform.scheduler.core.service.impl.JobOnlineService;
-import com.clubfactory.platform.scheduler.core.service.impl.MachineService;
 import com.clubfactory.platform.scheduler.core.service.impl.TaskService;
 import com.clubfactory.platform.scheduler.core.service.impl.UserService;
 import com.clubfactory.platform.scheduler.core.vo.AlarmVO;

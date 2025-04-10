@@ -1,21 +1,20 @@
 package com.clubfactory.platform.scheduler.server.leader.runnable;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import com.clubfactory.platform.common.constant.DateFormatPattern;
-import com.clubfactory.platform.scheduler.common.utils.TaskDependsUtil;
-import com.clubfactory.platform.scheduler.core.service.impl.DqcRuleService;
+import com.clubfactory.platform.scheduler.common.constant.DateFormatPattern;
+import com.clubfactory.platform.scheduler.common.util.Assert;
+import com.clubfactory.platform.scheduler.common.util.DateUtil;
+import com.clubfactory.platform.scheduler.core.utils.TaskDependsUtil;
 import com.clubfactory.platform.scheduler.core.utils.SysConfigUtil;
 import com.clubfactory.platform.scheduler.core.vo.DqcRuleVO;
 import com.clubfactory.platform.scheduler.dal.enums.*;
 import com.clubfactory.platform.scheduler.dal.po.*;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.curator.shaded.com.google.common.collect.Lists;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,8 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
-import com.clubfactory.platform.common.util.Assert;
-import com.clubfactory.platform.common.util.DateUtil;
 import com.clubfactory.platform.scheduler.common.enums.ResourceType;
 import com.clubfactory.platform.scheduler.core.service.impl.LockService;
 import com.clubfactory.platform.scheduler.core.vo.JobOnlineDependsVO;

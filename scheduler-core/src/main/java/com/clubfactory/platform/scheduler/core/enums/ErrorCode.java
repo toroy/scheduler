@@ -1,6 +1,6 @@
 package com.clubfactory.platform.scheduler.core.enums;
 
-import com.clubfactory.platform.common.constant.IErrorCode;
+import com.clubfactory.platform.scheduler.common.constant.IErrorCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

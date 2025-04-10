@@ -1,6 +1,6 @@
 package com.clubfactory.platform.scheduler.core.service.impl;
 
-import com.clubfactory.platform.common.util.Assert;
+import com.clubfactory.platform.scheduler.common.util.Assert;
 import com.clubfactory.platform.scheduler.dal.dao.DsStateMapper;
 import com.clubfactory.platform.scheduler.dal.po.DsState;
 import org.springframework.stereotype.Service;

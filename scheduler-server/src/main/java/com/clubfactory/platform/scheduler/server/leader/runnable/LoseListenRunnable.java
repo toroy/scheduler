@@ -3,22 +3,15 @@ package com.clubfactory.platform.scheduler.server.leader.runnable;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
+import com.clubfactory.platform.scheduler.common.constant.DateFormatPattern;
+import com.clubfactory.platform.scheduler.common.util.DateUtil;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 
-import com.clubfactory.platform.common.constant.DateFormatPattern;
-import com.clubfactory.platform.common.util.DateUtil;
-import com.clubfactory.platform.scheduler.core.enums.CommandType;
-import com.clubfactory.platform.scheduler.core.vo.ScriptVO;
 import com.clubfactory.platform.scheduler.dal.enums.TaskStatusEnum;
 import com.clubfactory.platform.scheduler.dal.po.Task;
 import com.clubfactory.platform.scheduler.engine.utils.TaskLock;
-import com.clubfactory.platform.scheduler.core.dto.TaskDto;
-import com.clubfactory.platform.scheduler.server.utils.BizUtils;
 import com.google.common.collect.Lists;
 
 import lombok.extern.slf4j.Slf4j;

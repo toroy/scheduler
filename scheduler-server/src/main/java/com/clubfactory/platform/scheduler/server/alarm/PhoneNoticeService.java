@@ -1,11 +1,9 @@
 package com.clubfactory.platform.scheduler.server.alarm;
 
-import com.clubfactory.boot.autoconfigure.vms.VmsProxy;
-import com.clubfactory.platform.common.util.Assert;
+import com.clubfactory.platform.scheduler.common.util.Assert;
 import com.clubfactory.platform.scheduler.core.proxy.LettuceProxy;
 import com.clubfactory.platform.scheduler.core.vo.JobOnlineVO;
 import com.clubfactory.platform.scheduler.core.vo.TaskVO;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
@@ -38,8 +36,8 @@ public class PhoneNoticeService extends AbastractNoticeService implements INotic
 //    @Autowired
 //    VoiceProxy voiceClient;
 
-    @Autowired
-    private VmsProxy proxy;
+   // @Autowired
+   // private VmsProxy proxy;
     @Autowired
     LettuceProxy lettuceProxy;
     @PostConstruct
@@ -135,8 +133,8 @@ public class PhoneNoticeService extends AbastractNoticeService implements INotic
         Assert.collectionNonEmpty(mobiles, "电话列表");
         Assert.notBlank(text, "文本");
         boolean isSuccess = false;
-        String errmsg = proxy.callPhone(mobiles, text);
-        log.info("callNumber: name:{}, mobiles: {}, errorMsg: {}",text, StringUtils.join(mobiles),errmsg);
+       // String errmsg = proxy.callPhone(mobiles, text);
+        //log.info("callNumber: name:{}, mobiles: {}, errorMsg: {}",text, StringUtils.join(mobiles),errmsg);
     }
 
     private String getError(List<String> errors) {

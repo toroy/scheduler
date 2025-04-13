@@ -1,4 +1,4 @@
-package com.clubfactory.platform.scheduler.core.utils;
+package com.clubfactory.platform.scheduler.dal.utils;
 
 import java.util.Date;
 import java.util.List;

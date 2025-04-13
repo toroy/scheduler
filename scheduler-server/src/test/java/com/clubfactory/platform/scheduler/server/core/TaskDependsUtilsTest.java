@@ -7,7 +7,7 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.clubfactory.platform.scheduler.common.constant.DateFormatPattern;
 import com.clubfactory.platform.scheduler.common.util.DateUtil;
-import com.clubfactory.platform.scheduler.core.utils.TaskDependsUtil;
+import com.clubfactory.platform.scheduler.dal.utils.TaskDependsUtil;
 import com.clubfactory.platform.scheduler.dal.enums.JobCycleTypeEnum;
 import com.clubfactory.platform.scheduler.dal.po.JobOnline;
 import com.clubfactory.platform.scheduler.dal.po.Task;

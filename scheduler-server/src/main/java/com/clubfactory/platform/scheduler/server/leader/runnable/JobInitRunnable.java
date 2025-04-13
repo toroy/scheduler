@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import com.clubfactory.platform.scheduler.common.constant.DateFormatPattern;
 import com.clubfactory.platform.scheduler.common.util.Assert;
 import com.clubfactory.platform.scheduler.common.util.DateUtil;
-import com.clubfactory.platform.scheduler.core.utils.TaskDependsUtil;
+import com.clubfactory.platform.scheduler.dal.utils.TaskDependsUtil;
 import com.clubfactory.platform.scheduler.core.utils.SysConfigUtil;
 import com.clubfactory.platform.scheduler.core.vo.DqcRuleVO;
 import com.clubfactory.platform.scheduler.dal.enums.*;

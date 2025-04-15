@@ -1,0 +1,73 @@
+version: '3.2'
+
+services:
+  zk1:
+    image: zookeeper:latest
+    hostname: zk1
+    container_name: zk1
+    ports:
+      - "2181:2181"
+      - "8081:8080"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181 server.2=zk2:2888:3888;2181 server.3=zk3:2888:3888;2181
+    volumes:
+      - ./zk1/data:/data
+      - ./zk1/datalog:/datalog
+      - /etc/localtime:/etc/localtime
+    networks:
+      - zk-net
+
+  zk2:
+    image: zookeeper:latest
+    hostname: zk2
+    container_name: zk2
+    ports:
+      - "2182:2181"
+      - "8082:8080"
+    environment:
+      ZOO_MY_ID: 2
+      ZOO_SERVERS: server.1=zk1:2888:3888;2181 server.2=0.0.0.0:2888:3888;2181 server.3=zk3:2888:3888;2181
+    volumes:
+      - ./zk2/data:/data
+      - ./zk2/datalog:/datalog
+      - /etc/localtime:/etc/localtime
+    networks:
+      - zk-net
+
+  zk3:
+    image: zookeeper:latest
+    hostname: zk3
+    container_name: zk3
+    ports:
+      - "2183:2181"
+      - "8083:8080"
+    environment:
+      ZOO_MY_ID: 3
+      ZOO_SERVERS: server.1=zk1:2888:3888;2181 server.2=zk2:2888:3888;2181 server.3=0.0.0.0:2888:3888;2181
+    volumes:
+      - ./zk3/data:/data
+      - ./zk3/datalog:/datalog
+      - /etc/localtime:/etc/localtime
+    networks:
+      - zk-net
+
+  mysql-db:
+    container_name: mysql
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    restart: always
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '5g'
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    volumes:
+      - "./mysql/data:/var/lib/mysql"
+      - "./mysql/config:/etc/mysql/conf.d"
+
+networks:
+  zk-net:
+    driver: bridge

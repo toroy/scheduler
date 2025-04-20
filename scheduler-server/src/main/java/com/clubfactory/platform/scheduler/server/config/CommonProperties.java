@@ -162,11 +162,11 @@ public class CommonProperties {
 
     @Value("${zookeeper.scheduler.task.lock.root-path}")
     private String taskLockRootPath;
-    @Value("${fs.cos.access-key-id}")
-    private String cosAccessKeyId;
-
-    @Value("${fs.cos.access-key-secret}")
-    private String cosAccessKeySecret;
+//    @Value("${fs.cos.access-key-id}")
+//    private String cosAccessKeyId;
+//
+//    @Value("${fs.cos.access-key-secret}")
+//    private String cosAccessKeySecret;
 
 
     public String getS3aConnPoolSize() {
@@ -387,8 +387,8 @@ public class CommonProperties {
 
         props.put(Constants.TASK_LOCK_ROOT_PATH,getTaskLockRootPath());
 
-        props.put(Constants.FS_COS_ACCESS_KEY_ID,cosAccessKeyId);
-        props.put(Constants.FS_COS_ACCESS_KEY_SECRET,cosAccessKeySecret);
+//        props.put(Constants.FS_COS_ACCESS_KEY_ID,cosAccessKeyId);
+//        props.put(Constants.FS_COS_ACCESS_KEY_SECRET,cosAccessKeySecret);
 
         return props;
     }

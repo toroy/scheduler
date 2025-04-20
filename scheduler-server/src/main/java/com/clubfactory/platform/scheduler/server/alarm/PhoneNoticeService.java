@@ -1,7 +1,7 @@
 package com.clubfactory.platform.scheduler.server.alarm;
 
 import com.clubfactory.platform.scheduler.common.util.Assert;
-import com.clubfactory.platform.scheduler.core.proxy.LettuceProxy;
+//import com.clubfactory.platform.scheduler.core.proxy.LettuceProxy;
 import com.clubfactory.platform.scheduler.core.vo.JobOnlineVO;
 import com.clubfactory.platform.scheduler.core.vo.TaskVO;
 import com.google.common.collect.Sets;
@@ -38,8 +38,8 @@ public class PhoneNoticeService extends AbastractNoticeService implements INotic
 
    // @Autowired
    // private VmsProxy proxy;
-    @Autowired
-    LettuceProxy lettuceProxy;
+//    @Autowired
+//    LettuceProxy lettuceProxy;
     @PostConstruct
     public void init() {
         active = environment.getActiveProfiles()[0];

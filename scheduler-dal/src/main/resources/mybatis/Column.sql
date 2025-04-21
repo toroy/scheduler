@@ -5,7 +5,7 @@ CREATE TABLE sc_column
    foreign_id BIGINT COMMENT '外键id',
     name VARCHAR(256) COMMENT '字段名',
     type VARCHAR(256) COMMENT '字段类型',
-    desc VARCHAR(256) COMMENT '字段描述',
+    `desc` VARCHAR(256) COMMENT '字段描述',
     create_user bigint  COMMENT '创建人',
     update_user bigint  COMMENT '修改人',
     create_time timestamp null COMMENT '创建时间',

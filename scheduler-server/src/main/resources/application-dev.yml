@@ -2,9 +2,10 @@ zookeeper:
   quorum: 101.89.54.49:2181
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://sh-cdb-klmhn69y.sql.tencentcdb.com:63592/scheduler
-    username: public_write
-    password: wozaidb@2023
+    url: jdbc:log4jdbc:mysql://117.50.245.35:3306/scheduler
+    username: zg
+    password: zg123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
   mail:
     username: lijiangzhou@clubfactory.com
     password: srfvnvhuxoailfon

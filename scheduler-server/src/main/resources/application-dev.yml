@@ -1,5 +1,5 @@
 zookeeper:
-  quorum: 101.89.54.49:2181
+  quorum: 117.50.245.35:2181
 spring:
   datasource:
     url: jdbc:log4jdbc:mysql://117.50.245.35:3306/scheduler

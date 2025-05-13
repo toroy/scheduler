@@ -25,7 +25,19 @@ CREATE TABLE sc_job
     update_time timestamp null COMMENT '修改时间',
     run_on_tmp_emr Boolean COMMENT '是否使用临时集群运行，1：是，0：不是',
     job_conf   VARCHAR(512) COMMENT '作业级别的个性化配置',
-    job_type_id BIGINT COMMENT '作业类型id'
+    job_type_id BIGINT COMMENT '作业类型id',
+    version VARCHAR(64),
+    exec_param VARCHAR(256) COMMENT '其它参数',
+    main_class  VARCHAR(256),
+    deploy_mode  VARCHAR(256),
+    program_type  VARCHAR(256),
+    time_out INT,
+    is_check_cycle Boolean,
+    err_msg VARCHAR(256),
+    group_id INT,
+    project_id INT,
+    params VARCHAR(256) COMMENT '其它参数',
+    args_param VARCHAR(256) COMMENT '参数'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1;
 
 

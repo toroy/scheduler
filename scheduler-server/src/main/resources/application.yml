@@ -122,16 +122,16 @@ data:
 ## 脚本资源保存
 dfs:
   super:
-    user: hdfs
+    user: ubuntu
 resource:
   storage:
     dfs:
       # HDFS,S3,OSS,COS
-      type: COS
+      type: HDFS
 fs:
   #  s3的配置
   #  defaultFS: s3a://cfdp-new
-  defaultFS: cosn://gaia-1318812101
+  defaultFS: hdfs://117.50.245.35:9000/
   s3a:
     endpoint: s3.us-west-2.amazonaws.com
     access:

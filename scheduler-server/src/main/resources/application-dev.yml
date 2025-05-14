@@ -1,8 +1,8 @@
 zookeeper:
-  quorum: 117.50.245.35:2181
+  quorum: 10.60.156.93:2181,10.60.64.13:2181,10.60.83.19:2181
 spring:
   datasource:
-    url: jdbc:log4jdbc:mysql://117.50.245.35:3306/scheduler
+    url: jdbc:log4jdbc:mysql://10.60.156.93:3306/scheduler
     username: zg
     password: zg123456
     driver-class-name: com.mysql.cj.jdbc.Driver

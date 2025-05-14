@@ -131,7 +131,7 @@ resource:
 fs:
   #  s3的配置
   #  defaultFS: s3a://cfdp-new
-  defaultFS: hdfs://117.50.245.35:9000/
+  defaultFS: hdfs://10.60.156.93:9000/
   s3a:
     endpoint: s3.us-west-2.amazonaws.com
     access:

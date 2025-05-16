@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.SubGroupRelMapper" >
-  <resultMap id="BaseResultMap" type="com.clubfactory.platform.scheduler.dal.po.SubGroupRel" >
+<mapper namespace="com.bigdata.platform.scheduler.dal.dao.SubGroupRelMapper" >
+  <resultMap id="BaseResultMap" type="com.bigdata.platform.scheduler.dal.po.SubGroupRel" >
     <id column="id" property="id" />
     <result column="is_deleted" property="isDeleted" />
     <result column="create_time" property="createTime" />
@@ -150,7 +150,7 @@
     </if>
   </select>
 
-    <resultMap id="alertSubMap" type="com.clubfactory.platform.scheduler.dal.po.AlertSub" >
+    <resultMap id="alertSubMap" type="com.bigdata.platform.scheduler.dal.po.AlertSub" >
         <id column="id" property="id" />
         <result column="is_deleted" property="isDeleted" />
         <result column="create_time" property="createTime" />
@@ -190,7 +190,7 @@
     </select>
 
 
-    <resultMap id="groupInfoMap" type="com.clubfactory.platform.scheduler.dal.po.GroupInfo" >
+    <resultMap id="groupInfoMap" type="com.bigdata.platform.scheduler.dal.po.GroupInfo" >
         <id column="id" property="id" />
         <result column="is_deleted" property="isDeleted" />
         <result column="create_time" property="createTime" />

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.MacroVarMapper">
-    <resultMap id="baseResultMap" type="com.clubfactory.platform.scheduler.dal.po.MacroVar">
+<mapper namespace="com.bigdata.platform.scheduler.dal.dao.MacroVarMapper">
+    <resultMap id="baseResultMap" type="com.bigdata.platform.scheduler.dal.po.MacroVar">
         <id column="id" property="id"/>
         <result column="var_name" property="varName"/>
         <result column="var_expr" property="varExpr"/>

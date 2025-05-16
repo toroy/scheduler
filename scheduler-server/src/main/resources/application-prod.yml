@@ -4,7 +4,7 @@ spring:
     username: public_write
     password: wozaidb@2023
   mail:
-    username: lijiangzhou@clubfactory.com
+    username: lijiangzhou@163.com
     password: srfvnvhuxoailfon
 
 im:
@@ -14,9 +14,9 @@ im:
 email:
   system:
      "{
-     'gaia_notice01@wholee.sale': 'hbzpdhphlivpypog'
+     'gaia_notice01@163.com': 'hbzpdhphlivpypog'
      }"
-  manager: lijiangzhou@wholeeprime.com
+  manager: lijiangzhou@163.com
 
 ## zk相关配置
 zookeeper:

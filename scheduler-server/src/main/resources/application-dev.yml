@@ -7,7 +7,7 @@ spring:
     password: zg123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   mail:
-    username: lijiangzhou@clubfactory.com
+    username: lijiangzhou@163.com
     password: srfvnvhuxoailfon
 
 im:
@@ -17,9 +17,9 @@ im:
 email:
   system:
     "{
-      'gaia_notice01@wholee.sale': 'hbzpdhphlivpypog'
+      'gaia_notice01@163.com': 'hbzpdhphlivpypog'
       }"
-  manager: lijiangzhou@wholeeprime.com,soso24w@hotmail.com
+  manager: lijiangzhou@163.com,soso24w@hotmail.com
 
 server:
   port: 9081

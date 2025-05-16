@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.clubfactory.platform.scheduler.dal.dao.LogMapMapper">
-    <resultMap id="baseResultMap" type="com.clubfactory.platform.scheduler.dal.po.LogMap">
+<mapper namespace="com.bigdata.platform.scheduler.dal.dao.LogMapMapper">
+    <resultMap id="baseResultMap" type="com.bigdata.platform.scheduler.dal.po.LogMap">
         <id column="id" property="id"/>
         <result column="task_id" property="taskId"/>
         <result column="log_name" property="logName"/>

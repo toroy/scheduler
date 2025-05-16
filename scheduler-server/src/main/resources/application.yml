@@ -1,6 +1,6 @@
 spring:
   autoconfigure:
-    exclude: com.clubfactory.boot.autoconfigure.datasource.RoutableDataSourceStrategyAutoConfiguration
+    exclude: com.bigdata.boot.autoconfigure.datasource.RoutableDataSourceStrategyAutoConfiguration
   application:
     name: scheduler
   profiles:

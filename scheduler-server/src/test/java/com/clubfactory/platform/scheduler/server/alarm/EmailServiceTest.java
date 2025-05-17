@@ -48,7 +48,7 @@ public class EmailServiceTest extends BaseTest {
 		NoticeDto dto = new NoticeDto();
 		AlarmVO alarm = new AlarmVO();
 		alarm.setType(AlarmTypeEnum.FAILED);
-		alarm.setNoticeType(AlarmNoticeTypeEnum.IM);
+		alarm.setNoticeType(AlarmNoticeTypeEnum.EMAIL);
 		alarm.setAddresses("soso24w@hotmail.com");
 		alarm.setUserGroupId(332L);
 		dto.setAlarm(alarm);

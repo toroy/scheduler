@@ -14,6 +14,7 @@
     <result column="is_admin" property="isAdmin" />
     <result column="depart_name" property="departName" />
     <result column="alias" property="alias" />
+    <result column="password" property="password" />
   </resultMap>
 
 
@@ -28,6 +29,7 @@
 	,is_admin
 	,depart_name
 	,alias
+    ,password
 	,create_time
     ,update_time
   </sql>
@@ -45,6 +47,7 @@
       ,is_admin
       ,depart_name
       ,alias
+      ,password
   </sql>
 
 <sql id="Insert_Value">
@@ -59,6 +62,7 @@
     ,#{po.isAdmin}
     ,#{po.departName}
     ,#{po.alias}
+    ,#{po.password}
 </sql>
 
 
@@ -86,6 +90,9 @@
      </if>
      <if test="isAdmin != null and isAdmin != ''" >
         ${joinStr} is_admin =#{isAdmin}
+     </if>
+     <if test="password != null and password != ''" >
+         ${joinStr} is_admin =#{password}
      </if>
      <if test="departName != null and departName != ''" >
         ${joinStr} depart_name like concat("%",#{departName},"%")

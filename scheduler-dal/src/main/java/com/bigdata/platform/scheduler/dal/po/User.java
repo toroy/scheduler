@@ -14,6 +14,11 @@ public class User extends BasePO {
 	 * 名字
 	 */
 	private String name;
+
+	/**
+	 * 密码
+	 */
+	private String password;
 	
 	/**
 	 * 部门id

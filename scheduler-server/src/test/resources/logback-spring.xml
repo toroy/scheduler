@@ -11,7 +11,7 @@
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} |%-5level| %msg%n</pattern>
         </encoder>
-        <filter class="com.clubfactory.platform.scheduler.server.config.ServerLogFilter"/>
+        <filter class="com.bigdata.platform.scheduler.server.config.ServerLogFilter"/>
     </appender>
 
     <!--web层、service层、dao层、error级别日志配置 -->
@@ -25,7 +25,7 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%logger{56}.%method:%L|%msg%n
             </pattern>
         </encoder>
-        <filter class="com.clubfactory.platform.scheduler.server.config.ServerLogFilter"/>
+        <filter class="com.bigdata.platform.scheduler.server.config.ServerLogFilter"/>
     </appender>
 
     <appender name="errorAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -38,7 +38,7 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%-5level|%logger{56}.%method:%L|%msg%n
             </pattern>
         </encoder>
-        <filter class="com.clubfactory.platform.scheduler.server.config.ServerLogFilter"/>
+        <filter class="com.bigdata.platform.scheduler.server.config.ServerLogFilter"/>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
@@ -50,8 +50,8 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
-        <filter class="com.clubfactory.platform.scheduler.engine.config.TaskLogFilter"/>
-        <Discriminator class="com.clubfactory.platform.scheduler.engine.config.TaskLogDiscriminator">
+        <filter class="com.bigdata.platform.scheduler.engine.config.TaskLogFilter"/>
+        <Discriminator class="com.bigdata.platform.scheduler.engine.config.TaskLogDiscriminator">
             <key>taskAppId</key>
             <logBase>${LOG_PATH}</logBase>
         </Discriminator>

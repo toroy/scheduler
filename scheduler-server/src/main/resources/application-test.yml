@@ -7,8 +7,8 @@ spring:
     password: zg123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   mail:
-    username: lijiangzhou@clubfactory.com
-    password: srfvnvhuxoailfon
+    username: 258474202@qq.com
+    password: ignbojzqmpjdcabe
 
 im:
   url: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=

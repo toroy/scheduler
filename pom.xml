@@ -17,7 +17,7 @@
 	</modules>
 
 	<name>scheduler</name>
-	<groupId>com.wholee.platform</groupId>
+	<groupId>com.bigdata.platform</groupId>
 	<artifactId>scheduler</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -49,14 +49,6 @@
 				<artifactId>guava</artifactId>
 				<version>28.1-jre</version>
 			</dependency>
-
-<!--			<dependency>-->
-<!--				<groupId>com.clubfactory.boot</groupId>-->
-<!--				<artifactId>wozai-boot-framework</artifactId>-->
-<!--				<version>2.1.8</version>-->
-<!--				<type>pom</type>-->
-<!--				<scope>import</scope>-->
-<!--			</dependency>-->
 
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
@@ -146,46 +138,46 @@
 			</dependency>
 
 			<dependency>
-				<groupId>com.wholee.platform</groupId>
+				<groupId>com.bigdata.platform</groupId>
 				<artifactId>scheduler-dal</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.wholee.platform</groupId>
+				<groupId>com.bigdata.platform</groupId>
 				<artifactId>scheduler-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.wholee.platform</groupId>
+				<groupId>com.bigdata.platform</groupId>
 				<artifactId>scheduler-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.wholee.platform</groupId>
+				<groupId>com.bigdata.platform</groupId>
 				<artifactId>scheduler-plugin-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.wholee.platform</groupId>
+				<groupId>com.bigdata.platform</groupId>
 				<artifactId>scheduler-engine</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.wholee.platform</groupId>
+				<groupId>com.bigdata.platform</groupId>
 				<artifactId>scheduler-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.wholee.platform</groupId>
+				<groupId>com.bigdata.platform</groupId>
 				<artifactId>scheduler-test</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.wholee.platform</groupId>
+				<groupId>com.bigdata.platform</groupId>
 				<artifactId>scheduler-server</artifactId>
 				<version>${project.version}</version>
 			</dependency>

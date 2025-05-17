@@ -7,7 +7,7 @@ spring:
     password: zg123456
     driver-class-name: com.mysql.cj.jdbc.Driver
   mail:
-    username: lijiangzhou@clubfactory.com
+    username: lijiangzhou@163.com
     password: srfvnvhuxoailfon
 
 im:

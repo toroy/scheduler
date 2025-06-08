@@ -1,0 +1,66 @@
+package com.zhugeio.platform.scheduler.task;
+
+import com.zhugeio.platform.scheduler.task.param.FlinkParameters;
+import com.zhugeio.platform.scheduler.task.param.FlinkTaskType;
+import com.zhugeio.platform.scheduler.core.vo.TaskVO;
+import com.zhugeio.platform.scheduler.spi.param.IParameters;
+import com.zhugeio.platform.scheduler.spi.plugin.AbstractYarnTask;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.zhugeio.platform.scheduler.common.Constants.DEFAULT_STREAMING_TASK_QUEUE;
+import static com.zhugeio.platform.scheduler.common.Constants.STREAMING_TASK_QUEUE_KEY;
+
+/**
+ * @author xiejiajun
+ */
+public class FlinkBatchTask extends AbstractYarnTask {
+
+    private final static String FLINK_COMMAND = "flink";
+
+    public FlinkBatchTask(TaskVO taskInfo, Logger logger, StateTracker stateTracker) {
+        super(taskInfo, logger, stateTracker);
+    }
+
+    @Override
+    protected Class<? extends IParameters> getParameterType() {
+        return FlinkParameters.class;
+    }
+
+    @Override
+    protected List<String> buildCommandList() throws Exception {
+        List<String> commandList = new ArrayList<>();
+        String flinkBinDir = this.getString("flink.bin.dir");
+        if (StringUtils.isNotBlank(flinkBinDir)){
+            commandList.add(flinkBinDir + "/" + FLINK_COMMAND);
+        }else {
+            commandList.add(FLINK_COMMAND);
+        }
+        commandList.add("run");
+        commandList.add("\\\n");
+        FlinkParameters flinkParameters = this.getParameter();
+        if (isStreamTask() && StringUtils.isBlank(flinkParameters.getQueue())) {
+            flinkParameters.setQueue(this.getString(STREAMING_TASK_QUEUE_KEY, DEFAULT_STREAMING_TASK_QUEUE));
+        }
+        commandList.addAll(FlinkParameters.FlinkArgsBuilder
+                .buildArgs(flinkParameters, String.format("%s-%s", this.taskInfo.getName(), taskInfo.getId()), this.isStreamTask()));
+        return commandList;
+    }
+
+    @Override
+    protected String fileExt() {
+        return isPyFlink() ? "py" : "jar";
+    }
+
+    /**
+     * 判断是否为pyFlink
+     * @return
+     */
+    private boolean isPyFlink(){
+        FlinkParameters flinkParameters = this.getParameter();
+        return flinkParameters != null && flinkParameters.getLanguageType() == FlinkTaskType.PYTHON;
+    }
+}

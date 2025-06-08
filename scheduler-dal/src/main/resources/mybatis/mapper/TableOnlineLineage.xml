@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bigdata.platform.scheduler.dal.dao.TableOnlineLineageMapper" >
-  <resultMap id="BaseResultMap" type="com.bigdata.platform.scheduler.dal.po.TableOnlineLineage" >
+<mapper namespace="com.zhugeio.platform.scheduler.dal.dao.TableOnlineLineageMapper" >
+  <resultMap id="BaseResultMap" type="com.zhugeio.platform.scheduler.dal.po.TableOnlineLineage" >
     <id column="id" property="id" />
     <result column="is_deleted" property="isDeleted" />
     <result column="create_time" property="createTime" />
@@ -176,7 +176,7 @@
     </if>
   </select>
 
-    <resultMap id="subscribeMap" type="com.bigdata.platform.scheduler.dal.dto.SubscribeDto">
+    <resultMap id="subscribeMap" type="com.zhugeio.platform.scheduler.dal.dto.SubscribeDto">
         <result column="table_name" property="tableName" />
         <result column="db_name" property="dbName" />
         <result column="db_host" property="dbHost" />

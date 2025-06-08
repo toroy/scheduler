@@ -16,8 +16,8 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
-        <filter class="com.bigdata.platform.scheduler.engine.config.TaskLogFilter"/>
-        <Discriminator class="com.bigdata.platform.scheduler.engine.config.TaskLogDiscriminator">
+        <filter class="com.zhugeio.platform.scheduler.engine.config.TaskLogFilter"/>
+        <Discriminator class="com.zhugeio.platform.scheduler.engine.config.TaskLogDiscriminator">
             <key>taskAppId</key>
             <logBase>${log.base}</logBase>
         </Discriminator>

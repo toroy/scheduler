@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>scheduler</artifactId>
-        <groupId>com.bigdata.platform</groupId>
+        <groupId>com.zhugeio.platform</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.bigdata.platform</groupId>
+            <groupId>com.zhugeio.platform</groupId>
             <artifactId>scheduler-plugin-api</artifactId>
         </dependency>
     </dependencies>

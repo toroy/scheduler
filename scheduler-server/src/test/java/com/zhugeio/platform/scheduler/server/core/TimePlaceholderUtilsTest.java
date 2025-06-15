@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.zhugeio.platform.scheduler.common.utils.placeholder.TimePlaceholderUtils.*;
+
 
 public class TimePlaceholderUtilsTest {
 

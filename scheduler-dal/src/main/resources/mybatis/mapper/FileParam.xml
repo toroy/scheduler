@@ -10,11 +10,11 @@
     <result column="update_user" property="updateUser" />
     <result column="file_name" property="fileName" />
     <result column="remark" property="remark" />
-    <result column="script_type" property="scriptType" />
+    <result column="file_param_type" property="fileParamType" />
     <result column="version" property="version" />
     <result column="file_ext" property="fileExt" />
-    <result column="script_name" property="scriptName" />
-    <result column="script_base_path" property="scriptBasePath" />
+    <result column="file_param_name" property="fileParamName" />
+    <result column="file_param_base_path" property="fileParamBasePath" />
   </resultMap>
 
 
@@ -27,11 +27,11 @@
    ,update_user
 	,file_name
 	,remark
-	,script_type
+	,file_param_type
 	,version
 	,file_ext
-	,script_name
-	,script_base_path
+	,file_param_name
+	,file_param_base_path
   </sql>
 
 
@@ -43,11 +43,11 @@
      ,update_user
       ,file_name
       ,remark
-      ,script_type
+      ,file_param_type
       ,version
       ,file_ext
-      ,script_name
-      ,script_base_path
+      ,file_param_name
+      ,file_param_base_path
   </sql>
 
 <sql id="Insert_Value">
@@ -58,11 +58,11 @@
   ,#{po.updateUser}
     ,#{po.fileName}
     ,#{po.remark}
-    ,#{po.scriptType}
+    ,#{po.file_paramType}
     ,#{po.version}
     ,#{po.fileExt}
-    ,#{po.scriptName}
-    ,#{po.scriptBasePath}
+    ,#{po.file_paramName}
+    ,#{po.file_paramBasePath}
 </sql>
 
 
@@ -82,8 +82,8 @@
      <if test="remark != null and remark != ''" >
         ${joinStr} remark =#{remark}
      </if>
-     <if test="scriptType != null " >
-         ${joinStr} script_type =#{scriptType}
+     <if test="file_paramType != null " >
+         ${joinStr} file_param_type =#{file_paramType}
      </if>
      <if test=" version != null and version != 0 " >
          ${joinStr}  version =#{version}
@@ -91,11 +91,11 @@
      <if test=" fileExt != null and fileExt != '' " >
          ${joinStr}  file_ext =#{fileExt}
      </if>
-     <if test=" scriptName != null and scriptName != '' " >
-         ${joinStr}  script_name like concat('%',#{scriptName},'%')
+     <if test=" file_paramName != null and file_paramName != '' " >
+         ${joinStr}  file_param_name like concat('%',#{file_paramName},'%')
      </if>
-     <if test=" scriptBasePath != null and scriptBasePath != '' " >
-         ${joinStr}  script_base_path =#{scriptBasePath}
+     <if test=" file_paramBasePath != null and file_paramBasePath != '' " >
+         ${joinStr}  file_param_base_path =#{file_paramBasePath}
      </if>
 </sql>
 
@@ -221,9 +221,9 @@
       <include refid="Where_Sql"></include>
    </update>
 
-    <select id="selectIdByScriptName" resultType="java.lang.Long">
+    <select id="selectIdByFileParamName" resultType="java.lang.Long">
         select  id from <include refid="Table_Name" />
-        where script_name = #{scriptName}
+        where file_param_name = #{file_paramName}
         limit 1
     </select>
 

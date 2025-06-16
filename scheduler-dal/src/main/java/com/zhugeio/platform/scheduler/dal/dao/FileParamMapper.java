@@ -9,5 +9,5 @@ import org.apache.ibatis.annotations.Param;
 public interface FileParamMapper extends BaseMapper<FileParam>{
 
 
-    Long selectIdByScriptName(@Param("FileParamName") String fileParamName);
+    Long selectIdByFileParamName(@Param("FileParamName") String fileParamName);
 }

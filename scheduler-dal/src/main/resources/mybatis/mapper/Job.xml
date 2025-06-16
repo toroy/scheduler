@@ -17,6 +17,7 @@
     <result column="cycle_type" property="cycleType" />
     <result column="check_user" property="checkUser" />
     <result column="script_id" property="scriptId" />
+      <result column="file_param_id" property="fileParamId" />
     <result column="machine_id" property="machineId" />
     <result column="check_time" property="checkTime" />
     <result column="retry_dur" property="retryDur" />
@@ -59,6 +60,7 @@
 	,cycle_type
 	,check_user
 	,script_id
+    ,file_param_id
 	,machine_id
 	,check_time
 	,retry_dur
@@ -99,6 +101,7 @@
       ,cycle_type
       ,check_user
       ,script_id
+      ,file_param_id
       ,machine_id
       ,check_time
       ,retry_dur
@@ -139,6 +142,7 @@
     ,#{po.cycleType}
     ,#{po.checkUser}
     ,#{po.scriptId}
+    ,#{po.fileParamId}
     ,#{po.machineId}
     ,#{po.checkTime}
     ,#{po.retryDur}
@@ -205,6 +209,9 @@
      </if>
      <if test="scriptId != null" >
          ${joinStr} script_id =#{scriptId}
+     </if>
+     <if test="fileParamId != null" >
+         ${joinStr} file_param_id =#{fileParamId}
      </if>
      <if test="machineId != null" >
          ${joinStr} machine_id =#{machineId}

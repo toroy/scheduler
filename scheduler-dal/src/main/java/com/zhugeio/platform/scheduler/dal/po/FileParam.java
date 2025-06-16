@@ -20,7 +20,7 @@ public class FileParam extends BasePO {
 	/**
 	 * 脚本类型
 	 */
-	private ScriptType scriptType;
+	private ScriptType fileParamType;
 	
 	/**
 	 * 版本号
@@ -35,10 +35,10 @@ public class FileParam extends BasePO {
 	/**
 	 * 用户定义的文件名称
 	 */
-	private String scriptName;
+	private String fileParamName;
 
 	/**
 	 * 脚本存储父路径
 	 */
-	private String scriptBasePath;
+	private String fileParamBasePath;
 }

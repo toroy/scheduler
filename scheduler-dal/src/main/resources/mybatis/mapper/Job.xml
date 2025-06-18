@@ -22,6 +22,7 @@
     <result column="retry_dur" property="retryDur" />
     <result column="args_param" property="argsParam" />
     <result column="params" property="params" />
+      <result column="file_params" property="fileParams" />
     <result column="scheduler_time" property="schedulerTime" />
     <result column="name" property="name" />
     <result column="depart_name" property="departName" />
@@ -64,6 +65,7 @@
 	,retry_dur
 	,args_param
 	,params
+    ,file_params
 	,deploy_mode
 	,main_class
 	,program_type
@@ -104,6 +106,7 @@
       ,retry_dur
       ,args_param
       ,params
+      ,file_params
       ,deploy_mode
       ,main_class
       ,program_type
@@ -144,6 +147,7 @@
     ,#{po.retryDur}
     ,#{po.argsParam}
     ,#{po.params}
+    ,#{po.fileParams}
     ,#{po.deployMode}
     ,#{po.mainClass}
     ,#{po.programType}
@@ -220,6 +224,9 @@
      </if>
      <if test="params != null and params != ''" >
         ${joinStr} params =#{params}
+     </if>
+     <if test="fileParams != null and fileParams != ''" >
+         ${joinStr} file_params =#{fileParams}
      </if>
      <if test="deployMode != null" >
         ${joinStr} deploy_mode =#{deployMode}

@@ -81,6 +81,11 @@ public class BaseJob extends BasePO{
     private String params;
 
     /**
+     * 文件参数
+     */
+    private String fileParams;
+
+    /**
      * 审核人
      */
     private Long checkUser;

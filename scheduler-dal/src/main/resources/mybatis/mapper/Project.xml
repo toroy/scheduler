@@ -26,7 +26,8 @@
 
 
     <sql id="Insert_Column">
-     is_deleted
+        id
+        ,is_deleted
      ,create_user
      ,update_user
       ,description
@@ -34,7 +35,8 @@
   </sql>
 
     <sql id="Insert_Value">
-  #{po.isDeleted}
+        #{po.id}
+        ,#{po.isDeleted}
   ,#{po.createUser}
   ,#{po.updateUser}
     ,#{po.description}

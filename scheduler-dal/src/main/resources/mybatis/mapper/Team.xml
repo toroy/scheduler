@@ -20,14 +20,16 @@
 
 
     <sql id="Insert_Column">
-     create_time
+        id
+        ,create_time
      ,update_time
       ,depart_id
       ,depart_name
   </sql>
 
     <sql id="Insert_Value">
-  #{po.createTime}
+        #{po.id}
+        ,#{po.createTime}
   ,#{po.updateTime}
     ,#{po.departId}
     ,#{po.departName}

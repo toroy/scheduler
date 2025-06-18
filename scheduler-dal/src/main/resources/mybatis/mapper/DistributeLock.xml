@@ -17,13 +17,15 @@
     </sql>
 
     <sql id="Insert_Column">
-        resource_uniq_id
+        id
+        ,resource_uniq_id
 	    ,remark
 	    ,expire_time
 	</sql>
 
     <sql id="Insert_Value">
-        #{lockInfo.resourceId}
+        #{lockInfo.id}
+        ,#{lockInfo.resourceId}
         ,#{lockInfo.remark}
         ,#{lockInfo.expireTime}
     </sql>

@@ -24,7 +24,8 @@
 
 
   <sql id="Insert_Column">
-     create_time
+      id
+      ,create_time
      ,update_time
      , is_deleted
      ,create_user
@@ -34,7 +35,8 @@
   </sql>
 
 <sql id="Insert_Value">
-  #{po.createTime}
+    #{po.id}
+    ,#{po.createTime}
   ,#{po.updateTime}
   ,#{po.isDeleted}
   ,#{po.createUser}

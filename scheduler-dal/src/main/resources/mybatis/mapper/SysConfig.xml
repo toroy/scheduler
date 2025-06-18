@@ -25,7 +25,8 @@
     </sql>
 
     <sql id="Insert_Column">
-        apply_host
+        id
+        ,apply_host
         ,param_key
         ,param_val
         ,param_desc
@@ -35,7 +36,8 @@
 	</sql>
 
     <sql id="Insert_Value">
-        #{sysConf.applyHost}
+        #{po.id}
+        ,#{sysConf.applyHost}
         ,#{sysConf.paramKey}
         ,#{sysConf.paramValue}
         ,#{sysConf.paramDesc}

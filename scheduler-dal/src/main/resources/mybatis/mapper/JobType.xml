@@ -19,7 +19,8 @@
 
 
     <sql id="Insert_Column">
-        plugin_name
+        id
+        ,plugin_name
         ,plugin_desc
         ,plugin_clazz
         ,plugin_emr_clazz
@@ -39,7 +40,8 @@
     </sql>
 
     <sql id="Insert_Value">
-        #{jobType.pluginName}
+        #{po.id}
+        ,#{jobType.pluginName}
         ,#{jobType.pluginDesc}
         ,#{jobType.pluginClazz}
         ,#{jobType.pluginEmrClazz}

@@ -29,7 +29,8 @@
     </sql>
 
     <sql id="Insert_Column">
-        ds_id
+        id
+        ,ds_id
         ,db_host
         ,db_port
         ,db_user
@@ -41,7 +42,8 @@
 	</sql>
 
     <sql id="Insert_Value">
-        #{dsState.dsId}
+        #{dsState.id}
+        ,#{dsState.dsId}
         ,#{dsState.dbHost}
         ,#{dsState.dbPort}
         ,#{dsState.dbUser}

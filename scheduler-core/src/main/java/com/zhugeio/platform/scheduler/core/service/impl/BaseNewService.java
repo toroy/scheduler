@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.zhugeio.platform.scheduler.common.util.SnowflakeIdGenerator;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -69,6 +70,8 @@ public class BaseNewService<V extends P, P extends BasePO> {
         }
         //初始化插入时间，更新时间
         po.initCreate();
+        SnowflakeIdGenerator idGenerator = new SnowflakeIdGenerator(0, 0);
+        po.setId(idGenerator.generateUniqueId());
         int result = baseMapper.save(po);
         if (result > 0) {
             return po;

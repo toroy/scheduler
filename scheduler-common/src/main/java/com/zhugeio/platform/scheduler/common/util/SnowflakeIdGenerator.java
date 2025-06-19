@@ -1,5 +1,8 @@
 package com.zhugeio.platform.scheduler.common.util;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 /**
  * TODO
  *
@@ -9,8 +12,8 @@ package com.zhugeio.platform.scheduler.common.util;
 public class SnowflakeIdGenerator {
 
     // ==============================字段==============================
-    private final long workerId;          // 机器ID
-    private final long datacenterId;      // 数据中心ID
+    private long workerId;          // 机器ID
+    private long datacenterId;      // 数据中心ID
     private long sequence = 0L;           // 序列号
 
     private static final long TIMESTAMP_BITS = 28L;  // 缩短时间戳位数
@@ -30,6 +33,29 @@ public class SnowflakeIdGenerator {
 
     private long lastTimestamp = -1L;     // 上次生成ID的时间戳
 
+    private long defaultDatacenterId;
+
+    private long defaultWorkerId;
+
+    public SnowflakeIdGenerator() {
+        InetAddress localHost = null;
+        try {
+            localHost = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
+        if (localHost != null) {
+            String[] ipParts = localHost.getHostAddress().split("\\.");
+            this.defaultDatacenterId = Integer.parseInt(ipParts[2]);
+            this.defaultWorkerId = Integer.parseInt(ipParts[3]);
+        } else {
+            this.defaultDatacenterId = 0;
+            this.defaultWorkerId = 0;
+        }
+    }
+
+
+
     // ==============================构造函数==============================
     /**
      * 构造函数
@@ -37,6 +63,7 @@ public class SnowflakeIdGenerator {
      * @param datacenterId 数据中心ID (0 - 31)
      */
     public SnowflakeIdGenerator(long workerId, long datacenterId) {
+        this();
         // 检查workerId和datacenterId是否合法
         if (workerId > MAX_WORKER_ID || workerId < 0) {
             throw new IllegalArgumentException("Worker ID must be between 0 and " + MAX_WORKER_ID);
@@ -45,9 +72,14 @@ public class SnowflakeIdGenerator {
             throw new IllegalArgumentException("Datacenter ID must be between 0 and " + MAX_DATACENTER_ID);
         }
 
-        // 设置workerId和datacenterId
-        this.workerId = workerId;
-        this.datacenterId = datacenterId;
+        if (workerId == 0L && datacenterId == 0L) {
+            this.workerId = this.defaultDatacenterId;
+            this.datacenterId = this.defaultDatacenterId;;
+        } else {
+            // 设置workerId和datacenterId
+            this.workerId = workerId;
+            this.datacenterId = datacenterId;
+        }
     }
 
     // ==============================方法==============================

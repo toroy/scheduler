@@ -71,7 +71,7 @@ public class BaseNewService<V extends P, P extends BasePO> {
         //初始化插入时间，更新时间
         po.initCreate();
         SnowflakeIdGenerator idGenerator = new SnowflakeIdGenerator(0, 0);
-        po.setId(idGenerator.generateUniqueId());
+        po.setId(idGenerator.generate12DigitId());
         int result = baseMapper.save(po);
         if (result > 0) {
             return po;

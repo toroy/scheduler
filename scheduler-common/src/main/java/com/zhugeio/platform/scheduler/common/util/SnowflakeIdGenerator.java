@@ -13,14 +13,15 @@ public class SnowflakeIdGenerator {
     private final long datacenterId;      // 数据中心ID
     private long sequence = 0L;           // 序列号
 
+    private static final long TIMESTAMP_BITS = 28L;  // 缩短时间戳位数
+    private static final long WORKER_ID_BITS = 2L;   // 机器ID位数
+    private static final long DATACENTER_ID_BITS = 2L; // 数据中心位数
+    private static final long SEQUENCE_BITS = 6L;    // 序列号位数
+
     // 配置参数
-    private static final long MAX_WORKER_ID = 31L;
-    private static final long MAX_DATACENTER_ID = 31L;
-    private static final long TIMESTAMP_BITS = 41L;
+    private static final long MAX_WORKER_ID = (1L << WORKER_ID_BITS) - 1;
+    private static final long MAX_DATACENTER_ID = (1L << DATACENTER_ID_BITS) - 1;
     private static final long MAX_TIMESTAMP = ~(-1L << TIMESTAMP_BITS);
-    private static final long WORKER_ID_BITS = 5L;
-    private static final long DATACENTER_ID_BITS = 5L;
-    private static final long SEQUENCE_BITS = 12L;
 
     // 位移偏移量
     private static final long TIMESTAMP_SHIFT = SEQUENCE_BITS + WORKER_ID_BITS + DATACENTER_ID_BITS;
@@ -82,6 +83,11 @@ public class SnowflakeIdGenerator {
                 sequence);
     }
 
+    public synchronized long generate12DigitId() {
+        long fullId = generateUniqueId();
+        return fullId % 1000000000000L; // 取12位数字
+    }
+
     /**
      * 获取当前时间戳
      * @return 当前时间戳（毫秒）
@@ -110,7 +116,7 @@ public class SnowflakeIdGenerator {
         // 生成10个唯一ID并打印
         for (int i = 0; i < 10; i++) {
             new Thread(()->{
-                long uniqueId = idGenerator.generateUniqueId();
+                long uniqueId = idGenerator.generate12DigitId();
                 System.out.println("Generated Unique ID: " + uniqueId);
             }).start();
         }

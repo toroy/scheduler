@@ -100,8 +100,6 @@ public class BaseJob extends BasePO{
      */
     private Long scriptId;
 
-    private Long fileParamId;
-
     /**
      * 周期类型
      */

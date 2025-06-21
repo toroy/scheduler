@@ -36,7 +36,7 @@
 	</sql>
 
     <sql id="Insert_Value">
-        #{po.id}
+        #{sysConf.id}
         ,#{sysConf.applyHost}
         ,#{sysConf.paramKey}
         ,#{sysConf.paramValue}

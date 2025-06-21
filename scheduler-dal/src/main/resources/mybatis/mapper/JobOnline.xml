@@ -14,7 +14,7 @@
     <result column="type" property="type" />
     <result column="priority" property="priority" />
     <result column="params" property="params" />
-      <result column="file_params" property="fileParams" />
+      <result column="file_params_json" property="fileParamsJson" />
     <result column="args_param" property="argsParam" />
     <result column="version" property="version" />
     <result column="retry_max" property="retryMax" />
@@ -70,7 +70,7 @@
 	,priority
 	,args_param
 	,params
-    ,file_params
+    ,file_params_json
 	,main_class
 	,program_type
 	,deploy_mode
@@ -125,7 +125,7 @@
       ,priority
       ,args_param
 	  ,params
-     ,file_params
+     ,file_params_json
 	  ,main_class
 	  ,program_type
 	  ,deploy_mode
@@ -179,7 +179,7 @@
     ,#{po.priority}
     ,#{po.argsParam}
     ,#{po.params}
-    ,#{po.fileParams}
+    ,#{po.fileParamsJson}
     ,#{po.mainClass}
     ,#{po.programType}
     ,#{po.deployMode}

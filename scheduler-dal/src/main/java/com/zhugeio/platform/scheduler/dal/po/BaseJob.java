@@ -83,7 +83,7 @@ public class BaseJob extends BasePO{
     /**
      * 文件参数
      */
-    private String fileParams;
+    private String fileParamsJson;
 
     /**
      * 审核人

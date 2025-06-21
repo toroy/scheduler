@@ -33,7 +33,7 @@
 	</sql>
 
     <sql id="Insert_Value">
-        #{po.id}
+        #{var.id}
         ,#{var.varName}
         ,#{var.varExpr}
         ,#{var.varDesc}

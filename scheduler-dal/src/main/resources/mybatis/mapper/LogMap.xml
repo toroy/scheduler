@@ -33,7 +33,7 @@
 	</sql>
 
     <sql id="Insert_Value">
-        #{po.id}
+        #{logMap.id}
         ,#{logMap.taskId}
         ,#{logMap.logName}
         ,#{logMap.logPath}

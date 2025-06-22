@@ -60,11 +60,11 @@
   ,#{po.updateUser}
     ,#{po.fileName}
     ,#{po.remark}
-    ,#{po.file_paramType}
+    ,#{po.fileParamType}
     ,#{po.version}
     ,#{po.fileExt}
-    ,#{po.file_paramName}
-    ,#{po.file_paramBasePath}
+    ,#{po.fileParamName}
+    ,#{po.fileParamBasePath}
 </sql>
 
 
@@ -84,8 +84,8 @@
      <if test="remark != null and remark != ''" >
         ${joinStr} remark =#{remark}
      </if>
-     <if test="file_paramType != null " >
-         ${joinStr} file_param_type =#{file_paramType}
+     <if test="fileParamType != null " >
+         ${joinStr} file_param_type =#{fileParamType}
      </if>
      <if test=" version != null and version != 0 " >
          ${joinStr}  version =#{version}

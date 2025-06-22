@@ -225,7 +225,7 @@
 
     <select id="selectIdByFileParamName" resultType="java.lang.Long">
         select  id from <include refid="Table_Name" />
-        where file_param_name = #{file_paramName}
+        where file_param_name = #{fileParamName}
         limit 1
     </select>
 

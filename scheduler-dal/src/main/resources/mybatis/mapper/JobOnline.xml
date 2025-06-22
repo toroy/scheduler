@@ -257,8 +257,8 @@
      <if test="params != null and params != ''" >
         ${joinStr} params =#{params}
      </if>
-     <if test="fileParams != null and fileParams != ''" >
-         ${joinStr} file_params =#{fileParams}
+     <if test="fileParamsJson != null and fileParamsJson != ''" >
+         ${joinStr} file_params_json =#{fileParamsJson}
      </if>
 
      <if test="argsParam != null and argsParam != ''" >

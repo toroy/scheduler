@@ -7,6 +7,9 @@
         <result column="update_time" property="updateTime"/>
         <result column="depart_id" property="departId"/>
         <result column="depart_name" property="departName"/>
+        <result column="create_user" property="createUser" />
+        <result column="update_user" property="updateUser" />
+        <result column="is_deleted" property="isDeleted" />
     </resultMap>
 
 
@@ -16,6 +19,9 @@
    ,update_time
 	,depart_id
 	,depart_name
+    ,create_user
+   ,update_user
+   ,is_deleted
   </sql>
 
 
@@ -25,6 +31,9 @@
      ,update_time
       ,depart_id
       ,depart_name
+    ,create_user
+   ,update_user
+   ,is_deleted
   </sql>
 
     <sql id="Insert_Value">
@@ -33,10 +42,19 @@
   ,#{po.updateTime}
     ,#{po.departId}
     ,#{po.departName}
+    ,#{po.createUser}
+        ,#{po.updateUser}
+        ,#{po.isDeleted}
 </sql>
 
 
     <sql id="Single_Where_Sql">
+        <if test="isDeleted != null" >
+            ${joinStr} is_deleted = #{isDeleted}
+        </if>
+        <if test="createUser != null" >
+            ${joinStr} create_user = #{createUser}
+        </if>
         <if test="createTime != null">
             ${joinStr} create_time = #{createTime}
         </if>

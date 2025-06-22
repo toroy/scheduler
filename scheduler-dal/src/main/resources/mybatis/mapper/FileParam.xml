@@ -93,11 +93,11 @@
      <if test=" fileExt != null and fileExt != '' " >
          ${joinStr}  file_ext =#{fileExt}
      </if>
-     <if test=" file_paramName != null and file_paramName != '' " >
-         ${joinStr}  file_param_name like concat('%',#{file_paramName},'%')
+     <if test=" fileParamName != null and fileParamName != '' " >
+         ${joinStr}  file_param_name like concat('%',#{fileParamName},'%')
      </if>
-     <if test=" file_paramBasePath != null and file_paramBasePath != '' " >
-         ${joinStr}  file_param_base_path =#{file_paramBasePath}
+     <if test=" fileParamBasePath != null and fileParamBasePath != '' " >
+         ${joinStr}  file_param_base_path =#{fileParamBasePath}
      </if>
 </sql>
 

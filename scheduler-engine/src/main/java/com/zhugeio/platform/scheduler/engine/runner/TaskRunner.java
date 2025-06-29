@@ -4,14 +4,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+import com.alibaba.fastjson.JSONArray;
 import com.zhugeio.platform.scheduler.core.utils.CommonUtils;
 import com.zhugeio.platform.scheduler.core.utils.FileUtils;
 import com.zhugeio.platform.scheduler.core.utils.JSONUtils;
 import com.zhugeio.platform.scheduler.core.utils.LoggerUtils;
-import com.zhugeio.platform.scheduler.dal.po.BaseJob;
-import com.zhugeio.platform.scheduler.dal.po.JobType;
-import com.zhugeio.platform.scheduler.dal.po.LogMap;
-import com.zhugeio.platform.scheduler.dal.po.Task;
+import com.zhugeio.platform.scheduler.core.vo.FileParameterVO;
+import com.zhugeio.platform.scheduler.dal.po.*;
 import com.zhugeio.platform.scheduler.engine.config.TaskLogDiscriminator;
 import com.zhugeio.platform.scheduler.engine.dao.DataAccessFactory;
 import com.zhugeio.platform.scheduler.common.exception.BizException;
@@ -269,6 +268,12 @@ public class TaskRunner implements Runnable {
             taskInstance.setTimeout(timeout);
         }
 
+        // 设置文件配置参数
+        String fileParamsJson = jobInfo.getFileParamsJson();
+        if (fileParamsJson != null) {
+            List<FileParameterVO> fileParms = JSONArray.parseArray(fileParamsJson, FileParameterVO.class);
+            taskInstance.setFileParams(fileParms);
+        }
     }
 
     /**

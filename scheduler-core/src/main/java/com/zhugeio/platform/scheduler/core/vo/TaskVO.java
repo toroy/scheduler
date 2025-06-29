@@ -39,6 +39,11 @@ public class TaskVO extends Task {
     private String params;
 
     /**
+     * 任务执行参数文件，需要从job表关联得到
+     */
+    private List<FileParameterVO> fileParams;
+
+    /**
      * 需要根据create_user去从数据库关联查询
      */
     private String username;

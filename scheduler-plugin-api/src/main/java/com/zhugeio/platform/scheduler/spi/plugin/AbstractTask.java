@@ -5,6 +5,7 @@ import com.zhugeio.platform.scheduler.core.utils.JSONUtils;
 import com.zhugeio.platform.scheduler.common.utils.placeholder.MacroVarConvertUtils;
 import com.zhugeio.platform.scheduler.common.utils.ParamUtils;
 import com.zhugeio.platform.scheduler.common.Constants;
+import com.zhugeio.platform.scheduler.core.vo.FileParameterVO;
 import com.zhugeio.platform.scheduler.spi.constants.JobConf;
 import com.zhugeio.platform.scheduler.core.vo.MacroVarVO;
 import com.zhugeio.platform.scheduler.core.vo.TaskVO;
@@ -13,6 +14,7 @@ import com.zhugeio.platform.scheduler.spi.exception.TaskException;
 import com.zhugeio.platform.scheduler.spi.launcher.Launcher;
 import com.zhugeio.platform.scheduler.spi.launcher.ShellLauncher;
 import com.zhugeio.platform.scheduler.spi.param.AbstractParameter;
+import com.zhugeio.platform.scheduler.spi.param.FileParameter;
 import com.zhugeio.platform.scheduler.spi.param.IParameters;
 import com.zhugeio.platform.scheduler.spi.utils.JobParameterUtils;
 import com.google.common.collect.Maps;
@@ -27,9 +29,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 
 import java.io.File;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.zhugeio.platform.scheduler.common.Constants.*;
 
@@ -85,6 +86,12 @@ public abstract class AbstractTask implements JobConf {
      */
     protected final Map<String, String> taskParams;
 
+
+    /**
+     * 配置文件参数
+     */
+    protected List<FileParameter> fileParameters;
+
     /**
      * 作业状态跟踪(主要用于保存pid)
      */
@@ -104,6 +111,7 @@ public abstract class AbstractTask implements JobConf {
      * Task执行参数
      */
     private IParameters executeParameter;
+
 
     public AbstractTask(TaskVO taskInfo, Logger logger, StateTracker stateTracker) {
         this.taskInfo = taskInfo;
@@ -194,6 +202,7 @@ public abstract class AbstractTask implements JobConf {
         this.downloadScriptToExecDir();
         this.parseGlobalConfigs();
         this.parseTaskConfigs();
+        this.downloadParamFileToExecDir();
         this.createLauncher();
         this.initTimeZone();
     }
@@ -271,6 +280,60 @@ public abstract class AbstractTask implements JobConf {
     }
 
     /**
+     *  从DFS下载任务配置文件
+     */
+    protected void downloadParamFileToExecDir() {
+        String execDir = taskInfo.getExecuteDir();
+
+        if (CollectionUtils.isEmpty(taskInfo.getFileParams())) {
+            logger.info("no param file need to download");
+            return;
+        }
+        Map<String, List<String>> fileParamCommand = new HashMap<>();
+        for (FileParameterVO fileParameterVO: taskInfo.getFileParams()) {
+            String fileName = String.format("%s_%s.%s", fileParameterVO.getFileName(), fileParameterVO.getVersion(), fileParameterVO.getFileExt());
+            String dfsFilePath = DFSUtils.getDfsFilePath(fileParameterVO.getPath(), fileName);
+            String fileKey = fileParameterVO.getName();
+            if (fileParamCommand.containsKey(fileKey)) {
+                fileParamCommand.get(fileKey).add(dfsFilePath);
+            } else {
+                List<String> dfsFilePaths = new ArrayList<>();
+                dfsFilePaths.add(dfsFilePath);
+                fileParamCommand.put(fileKey, dfsFilePaths);
+            }
+        }
+        List<FileParameter> fileParameters = fileParamCommand.entrySet()
+            .stream()
+            .map(entry -> {
+                String key = entry.getKey();
+                List<String> dfsFiles = entry.getValue();
+                List<String> localFiles = new ArrayList<>();
+                for (String dfsFile: dfsFiles) {
+                   String localFile = execDir + File.separator + new File(dfsFile).getName();
+                   try {
+                       logger.info("开始下载file param {} 资源...", dfsFile);
+                       DFSUtils.getInstance()
+                               .copyDfsToLocal(dfsFile, localFile, false, true);
+                       localFiles.add(localFile);
+
+                   } catch (Exception e) {
+                       logger.error("Get dfs param file error", e);
+//                       throw new TaskException(e.getMessage());
+                   }
+                }
+
+                FileParameter param = new FileParameter();
+                param.setKey(key);
+                param.setDfsFiles(dfsFiles);
+                param.setLocalFiles(localFiles);
+
+                return param;
+            })
+            .collect(Collectors.toList());
+        this.fileParameters = fileParameters;
+    }
+
+    /**
      * 生成用于执行的作业文件名称
      * @return
      */
@@ -342,11 +405,24 @@ public abstract class AbstractTask implements JobConf {
         if (commandList == null) {
             throw new TaskException("任务启动命令构建方法未实现，该任务类型暂不可用");
         }
+        List<String> fileParamCommand = this.buildFileParamCommand();
+
         String command = this.convertVariable(String.join(" ", commandList));
         logger.info("\n\nTask launch command :\n{}\n\n", genCommandLog(command));
 
         command = this.convertMaskVariable(command);
         return command;
+    }
+
+    protected List<String> buildFileParamCommand() throws Exception {
+        List<String> fileParamCommand = new ArrayList<>();
+        if (CollectionUtils.isEmpty(this.fileParameters)) {
+            return fileParamCommand;
+        }
+        for (FileParameter fileParameter: this.fileParameters) {
+            fileParamCommand.add(fileParameter.getKey() + String.join(",", fileParameter.getLocalFiles()));
+        }
+        return fileParamCommand;
     }
 
     /**

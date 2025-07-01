@@ -1,11 +1,9 @@
 package com.zhugeio.platform.scheduler.core.vo;
 
-import lombok.Builder;
 import lombok.Data;
 
 
 @Data
-@Builder
 public class FileParameterVO {
 
     private String name;

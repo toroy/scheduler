@@ -291,7 +291,7 @@ public abstract class AbstractTask implements JobConf {
         }
         Map<String, List<String>> fileParamCommand = new HashMap<>();
         for (FileParameterVO fileParameterVO: taskInfo.getFileParams()) {
-            String fileName = String.format("%s_%s.%s", fileParameterVO.getFileName(), fileParameterVO.getVersion(), fileParameterVO.getFileExt());
+            String fileName = String.format("%s_%s", fileParameterVO.getFileName(), fileParameterVO.getVersion());
             String dfsFilePath = DFSUtils.getDfsFilePath(fileParameterVO.getPath(), fileName);
             String fileKey = fileParameterVO.getName();
             if (fileParamCommand.containsKey(fileKey)) {

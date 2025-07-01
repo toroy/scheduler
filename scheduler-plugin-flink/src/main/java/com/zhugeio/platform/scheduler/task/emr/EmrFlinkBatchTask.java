@@ -48,7 +48,7 @@ public class EmrFlinkBatchTask extends AbstractEmrTask {
 //    }
 
     @Override
-    protected List<String> buildCommandList() throws Exception {
+    protected List<String> buildCommandList(List<String> fileParamCommand) throws Exception {
         List<String> commandList = new ArrayList<>();
         String flinkBinDir = this.getString("flink.bin.dir");
         if (StringUtils.isNotBlank(flinkBinDir)){

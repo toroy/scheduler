@@ -6,11 +6,13 @@ import com.zhugeio.platform.scheduler.common.Constants;
 import com.zhugeio.platform.scheduler.core.vo.TaskVO;
 import com.zhugeio.platform.scheduler.spi.param.IParameters;
 import com.zhugeio.platform.scheduler.spi.plugin.AbstractYarnTask;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author xiejiajun
@@ -29,7 +31,7 @@ public class SparkTask extends AbstractYarnTask {
     }
 
     @Override
-    protected List<String> buildCommandList() throws Exception {
+    protected List<String> buildCommandList(List<String> fileParamCommand) throws Exception {
         List<String> commandList = new ArrayList<>();
         String sparkBinDir = this.getSparkBinDir();
         String defaultSparkAppName = String.format("'Gaia-Spark-%s-%s'", taskInfo.getName(), taskInfo.getId());
@@ -39,6 +41,10 @@ public class SparkTask extends AbstractYarnTask {
             commandList.add(SPARK_COMMAND);
         }
         commandList.add("\\\n");
+        if (CollectionUtils.isNotEmpty(fileParamCommand)) {
+            fileParamCommand = fileParamCommand.stream().map(s -> s + " \\\n").collect(Collectors.toList());
+            commandList.addAll(fileParamCommand);
+        }
         commandList.addAll(SparkParameters.SparkArgsUtils.buildArgs(this.getParameter(), defaultSparkAppName));
         return commandList;
     }

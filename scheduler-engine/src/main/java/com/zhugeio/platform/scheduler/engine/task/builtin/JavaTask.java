@@ -4,6 +4,7 @@ import com.zhugeio.platform.scheduler.engine.task.builtin.param.JavaParameters;
 import com.zhugeio.platform.scheduler.core.vo.TaskVO;
 import com.zhugeio.platform.scheduler.spi.param.IParameters;
 import com.zhugeio.platform.scheduler.spi.plugin.AbstractTask;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -34,13 +35,16 @@ public class JavaTask extends AbstractTask {
     }
 
     @Override
-    protected List<String> buildCommandList() throws Exception {
+    protected List<String> buildCommandList(List<String> fileParamCommand) throws Exception {
         JavaParameters javaParameters = this.getParameter();
         List<String> commandList = new ArrayList<>();
         commandList.add(JAVA_CMD);
         List<String> jvmArgs = javaParameters.getSysConfigsList();
         if (jvmArgs != null && jvmArgs.size() > 0){
             commandList.addAll(jvmArgs);
+        }
+        if (CollectionUtils.isNotEmpty(fileParamCommand)) {
+            commandList.addAll(fileParamCommand);
         }
         if (javaParameters.isJarMode()){
             commandList.add("-jar");

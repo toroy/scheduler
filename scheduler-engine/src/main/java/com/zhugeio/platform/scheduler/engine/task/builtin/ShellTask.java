@@ -44,7 +44,7 @@ public class ShellTask extends AbstractTask {
     }
 
     @Override
-    protected List<String> buildCommandList() throws Exception {
+    protected List<String> buildCommandList(List<String> fileParamCommand) throws Exception {
         ShellParameters shellParameters = this.getParameter();
         if (shellParameters.isScriptMode()){
             return processRawScript();

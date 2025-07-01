@@ -3,11 +3,13 @@ package com.zhugeio.platform.scheduler.engine.task.builtin;
 import com.zhugeio.platform.scheduler.engine.task.builtin.param.SparkParameters;
 import com.zhugeio.platform.scheduler.core.vo.TaskVO;
 import com.zhugeio.platform.scheduler.spi.plugin.AbstractTask;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author xiejiajun
@@ -19,7 +21,7 @@ public class SparkStreamingTask extends SparkTask {
     }
 
     @Override
-    protected List<String> buildCommandList() throws Exception {
+    protected List<String> buildCommandList(List<String> fileParamCommand) throws Exception {
         List<String> commandList = new ArrayList<>();
         String sparkBinDir = getSparkBinDir();
         String defaultSparkAppName = String.format("'Gaia-SparkStreaming-%s-%s'", taskInfo.getName(), taskInfo.getId());
@@ -30,6 +32,10 @@ public class SparkStreamingTask extends SparkTask {
         }
         commandList.add("\\\n");
         commandList.add("--conf spark.yarn.submit.waitAppCompletion=false \\\n");
+        if (CollectionUtils.isNotEmpty(fileParamCommand)) {
+            fileParamCommand = fileParamCommand.stream().map(s -> s + " \\\n").collect(Collectors.toList());
+            commandList.addAll(fileParamCommand);
+        }
         commandList.addAll(SparkParameters.SparkArgsUtils.buildArgs(this.getParameter(), defaultSparkAppName, true));
         return commandList;
     }

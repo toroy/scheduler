@@ -401,11 +401,12 @@ public abstract class AbstractTask implements JobConf {
      * @throws Exception
      */
     protected String buildCommand() throws Exception {
-        List<String> commandList = this.buildCommandList();
+        List<String> fileParamCommand = this.buildFileParamCommand();
+
+        List<String> commandList = this.buildCommandList(fileParamCommand);
         if (commandList == null) {
             throw new TaskException("任务启动命令构建方法未实现，该任务类型暂不可用");
         }
-        List<String> fileParamCommand = this.buildFileParamCommand();
 
         String command = this.convertVariable(String.join(" ", commandList));
         logger.info("\n\nTask launch command :\n{}\n\n", genCommandLog(command));
@@ -432,7 +433,7 @@ public abstract class AbstractTask implements JobConf {
      * @return
      * @throws Exception
      */
-    protected abstract List<String> buildCommandList() throws Exception;
+    protected abstract List<String> buildCommandList(List<String> fileParamCommand) throws Exception;
 
     /**
      * 取消任务

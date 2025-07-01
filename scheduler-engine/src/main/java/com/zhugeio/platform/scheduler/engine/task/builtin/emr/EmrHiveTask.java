@@ -53,7 +53,7 @@ public class EmrHiveTask extends AbstractEmrTask {
     }
 
     @Override
-    protected List<String> buildCommandList() throws Exception  {
+    protected List<String> buildCommandList(List<String> fileParamCommand) throws Exception  {
         String appNameKey = this.getString("hive.app-name.key", "tez.app.name");
         String defaultAppName = String.format("Gaia-Hive-%s-%s", taskInfo.getName(), taskInfo.getId());
         return new ArrayList<>(HiveParameters.HiveArgsUtils.buildArgs(this.getParameter(), appNameKey, defaultAppName));

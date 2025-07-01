@@ -28,7 +28,7 @@ public class EmrSparkStreamingTask extends EmrSparkTask {
     }
 
     @Override
-    protected List<String> buildCommandList() throws Exception {
+    protected List<String> buildCommandList(List<String> fileParamCommand) throws Exception {
         List<String> commandList = new ArrayList<>();
         String defaultSparkAppName = String.format("'Gaia-SparkStreaming-%s-%s'", taskInfo.getName(), taskInfo.getId());
         commandList.add(SPARK_COMMAND);

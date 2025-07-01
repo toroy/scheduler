@@ -44,7 +44,7 @@ public class DataXTask extends AbstractTask {
     }
 
     @Override
-    protected List<String> buildCommandList() throws Exception {
+    protected List<String> buildCommandList(List<String> fileParamCommand) throws Exception {
         String pythonCommand = this.getString(PYTHON_COMMAND_KEY, PYTHON);
         String dataXCommand = this.getString(DATAX_COMMAND_KEY);
         if (StringUtils.isBlank(dataXCommand)) {

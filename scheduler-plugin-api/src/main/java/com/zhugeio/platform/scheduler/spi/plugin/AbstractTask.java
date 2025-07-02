@@ -292,39 +292,45 @@ public abstract class AbstractTask implements JobConf {
         Map<String, List<String>> fileParamCommand = new HashMap<>();
         for (FileParameterVO fileParameterVO: taskInfo.getFileParams()) {
             String fileName = String.format("%s_%s", fileParameterVO.getFileName(), fileParameterVO.getVersion());
+            String localFile = String.format("%s.%s", fileName, fileParameterVO.getFileExt());
             String dfsFilePath = DFSUtils.getDfsFilePath(fileParameterVO.getPath(), fileName);
-            String fileKey = fileParameterVO.getName();
-            if (fileParamCommand.containsKey(fileKey)) {
-                fileParamCommand.get(fileKey).add(dfsFilePath);
-            } else {
-                List<String> dfsFilePaths = new ArrayList<>();
-                dfsFilePaths.add(dfsFilePath);
-                fileParamCommand.put(fileKey, dfsFilePaths);
+            try {
+                logger.info("开始下载file param {} 资源...", dfsFilePath);
+                DFSUtils.getInstance()
+                        .copyDfsToLocal(dfsFilePath, localFile, false, true);
+//                localFiles.add(localFile);
+                String fileKey = fileParameterVO.getName();
+                if (fileParamCommand.containsKey(fileKey)) {
+                    fileParamCommand.get(fileKey).add(localFile);
+                } else {
+                    List<String> localFiles = new ArrayList<>();
+                    localFiles.add(localFile);
+                    fileParamCommand.put(fileKey, localFiles);
+                }
+
+            } catch (Exception e) {
+                logger.error("Get dfs param file error", e);
+//               throw new TaskException(e.getMessage());
             }
+//            String fileKey = fileParameterVO.getName();
+//            if (fileParamCommand.containsKey(fileKey)) {
+//                fileParamCommand.get(fileKey).add(dfsFilePath);
+//            } else {
+//                List<String> dfsFilePaths = new ArrayList<>();
+//                dfsFilePaths.add(dfsFilePath);
+//                fileParamCommand.put(fileKey, dfsFilePaths);
+//            }
         }
         List<FileParameter> fileParameters = fileParamCommand.entrySet()
             .stream()
             .map(entry -> {
                 String key = entry.getKey();
-                List<String> dfsFiles = entry.getValue();
-                List<String> localFiles = new ArrayList<>();
-                for (String dfsFile: dfsFiles) {
-                   String localFile = execDir + File.separator + new File(dfsFile).getName();
-                   try {
-                       logger.info("开始下载file param {} 资源...", dfsFile);
-                       DFSUtils.getInstance()
-                               .copyDfsToLocal(dfsFile, localFile, false, true);
-                       localFiles.add(localFile);
-
-                   } catch (Exception e) {
-                       logger.error("Get dfs param file error", e);
-//                       throw new TaskException(e.getMessage());
-                   }
-                }
+//                List<String> dfsFiles = entry.getValue();
+                List<String> localFiles = entry.getValue();
 
                 FileParameter param = new FileParameter();
                 param.setKey(key);
-                param.setDfsFiles(dfsFiles);
+//                param.setDfsFiles(dfsFiles);
                 param.setLocalFiles(localFiles);
 
                 return param;

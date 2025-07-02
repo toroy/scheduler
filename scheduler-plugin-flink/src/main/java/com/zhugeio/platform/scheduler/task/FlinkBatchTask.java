@@ -5,11 +5,13 @@ import com.zhugeio.platform.scheduler.task.param.FlinkTaskType;
 import com.zhugeio.platform.scheduler.core.vo.TaskVO;
 import com.zhugeio.platform.scheduler.spi.param.IParameters;
 import com.zhugeio.platform.scheduler.spi.plugin.AbstractYarnTask;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.zhugeio.platform.scheduler.common.Constants.DEFAULT_STREAMING_TASK_QUEUE;
 import static com.zhugeio.platform.scheduler.common.Constants.STREAMING_TASK_QUEUE_KEY;
@@ -41,6 +43,10 @@ public class FlinkBatchTask extends AbstractYarnTask {
         }
         commandList.add("run");
         commandList.add("\\\n");
+        if (CollectionUtils.isNotEmpty(fileParamCommand)) {
+            fileParamCommand = fileParamCommand.stream().map(s -> s + " \\\n").collect(Collectors.toList());
+            commandList.addAll(fileParamCommand);
+        }
         FlinkParameters flinkParameters = this.getParameter();
         if (isStreamTask() && StringUtils.isBlank(flinkParameters.getQueue())) {
             flinkParameters.setQueue(this.getString(STREAMING_TASK_QUEUE_KEY, DEFAULT_STREAMING_TASK_QUEUE));

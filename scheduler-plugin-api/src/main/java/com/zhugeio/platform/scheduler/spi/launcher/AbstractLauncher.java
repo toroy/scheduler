@@ -143,6 +143,10 @@ public abstract class AbstractLauncher implements Launcher {
                 process.waitFor();
             }else {
                 long remainTime = taskInfo.getTimeout();
+                logger.info("--------remain time is: {}", remainTime);
+                if (remainTime < 10) {
+                    remainTime = 10;
+                }
                 status = process.waitFor(remainTime, TimeUnit.SECONDS);
             }
             if (!status){

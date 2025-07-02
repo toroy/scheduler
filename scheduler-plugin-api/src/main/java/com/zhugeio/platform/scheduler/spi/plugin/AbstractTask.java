@@ -292,7 +292,8 @@ public abstract class AbstractTask implements JobConf {
         Map<String, List<String>> fileParamCommand = new HashMap<>();
         for (FileParameterVO fileParameterVO: taskInfo.getFileParams()) {
             String fileName = String.format("%s_%s", fileParameterVO.getFileName(), fileParameterVO.getVersion());
-            String localFile = String.format("%s.%s", fileName, fileParameterVO.getFileExt());
+            //String localFile = String.format("%s.%s", fileName, fileParameterVO.getFileExt());
+            String localFile = execDir + File.separator + fileParameterVO.getTitle();
             String dfsFilePath = DFSUtils.getDfsFilePath(fileParameterVO.getPath(), fileName);
             try {
                 logger.info("开始下载file param {} 资源...", dfsFilePath);

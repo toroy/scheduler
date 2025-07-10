@@ -439,6 +439,13 @@
         </foreach>
     </insert>
 
+    <select id="listHasParamFiles" resultMap="BaseResultMap" >
+        select
+        <include refid="Select_Column" />
+        from <include refid="Table_Name" />
+        where is_deleted = 0 and (file_params_json is not null or file_params_json != '')
+    </select>
+
 
   <select id="get" resultMap="BaseResultMap">
     select

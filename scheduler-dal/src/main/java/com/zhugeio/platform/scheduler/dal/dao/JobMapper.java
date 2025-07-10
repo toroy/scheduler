@@ -9,4 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface JobMapper extends BaseMapper<Job>{
 
 	List<Job> listByName(Job job);
+
+	List<Job> listHasParamFiles();
 }

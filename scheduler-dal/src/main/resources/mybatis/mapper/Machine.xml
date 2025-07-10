@@ -26,7 +26,7 @@
    ,create_user
    ,update_user
 	,slots
-	,functions
+	,`functions`
 	,ip
 	,`name`
 	,`type`
@@ -43,7 +43,7 @@
      ,create_user
      ,update_user
       ,slots
-      ,functions
+      ,`functions`
       ,ip
       ,`name`
       ,`type`
@@ -85,7 +85,7 @@
          ${joinStr} slots =#{slots}
      </if>
      <if test="functions != null and functions != ''" >
-        ${joinStr} functions =#{functions}
+        ${joinStr} `functions` =#{functions}
      </if>
      <if test="ip != null and ip != ''" >
         ${joinStr} ip like concat('%',#{ip},'%')

@@ -132,6 +132,18 @@ public class TaskService extends BaseNewService<TaskVO,Task> {
     	this.edit(task);
     }
 
+	public void updateInit(List<Long> ids) {
+		Assert.collectionNotEmpty(ids, "id列表");
+		Set<Long> setIds = Sets.newHashSet(ids);
+
+		Task task = new Task();
+		task.setIds(Lists.newArrayList(setIds));
+		Map<String, Object> updateParam = Maps.newHashMap();
+		updateParam.put("status", TaskStatusEnum.INIT);
+		task.setUpdateParam(updateParam);
+		this.edit(task);
+	}
+
 	public void updateByLost(Long id) {
 		if (id == null) {
 			return;

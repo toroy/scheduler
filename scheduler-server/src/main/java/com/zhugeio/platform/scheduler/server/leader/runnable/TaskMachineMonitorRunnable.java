@@ -41,7 +41,7 @@ public class TaskMachineMonitorRunnable implements Runnable {
         taskFilter.setIsDeleted(false);
         taskFilter.setStatus(TaskStatusEnum.RUNNING);
         taskFilter.setCycleType(JobCycleTypeEnum.REAL_TIME);
-        taskFilter.setType("javaStreaming");
+        taskFilter.setType("JAVA_STREAMING");
         List<TaskVO> taskVOList = taskService.list(taskFilter);
         if (CollectionUtils.isEmpty(taskVOList)) {
             return;

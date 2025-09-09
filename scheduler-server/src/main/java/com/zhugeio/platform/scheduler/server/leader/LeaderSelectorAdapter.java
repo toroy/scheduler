@@ -54,6 +54,8 @@ public class LeaderSelectorAdapter extends LeaderSelectorListenerAdapter impleme
 			1);
 	private TaskMonitorRunnable taskMonitorRunnable = SpringBean.getBean(TaskMonitorRunnable.class);
 
+	private TaskMachineMonitorRunnable taskMachineMonitorRunnable = SpringBean.getBean(TaskMachineMonitorRunnable.class);
+
 	// 告警队列
 	private PriorityBlockingQueue<NoticeDto> NOTICE_QUEUE = new PriorityBlockingQueue<NoticeDto>(5000);
 	
@@ -106,6 +108,8 @@ public class LeaderSelectorAdapter extends LeaderSelectorListenerAdapter impleme
 		//定时监控任务
 		int period = Optional.ofNullable(SysConfigUtil.getNumberByKey(Constant.TASK_MONITOR_PERIOD)).orElse(10);
 		scheduledPool.scheduleAtFixedRate(taskMonitorRunnable, 0, period, TimeUnit.SECONDS);
+		// 定时监控任务机器
+		scheduledPool.scheduleAtFixedRate(taskMachineMonitorRunnable, 0, period, TimeUnit.SECONDS);
 		
 		ThreadPoolExecutor tpe = ((ThreadPoolExecutor) executors);
 		while(true) {

@@ -47,8 +47,8 @@ public class TaskMachineMonitorRunnable implements Runnable {
     @Autowired
     private JobService jobService;
 
-    private static final int RETRY_NUM = 5;
-    private static final int TIME_OUT_MS = 5000;
+    private static final int RETRY_NUM = 4;
+    private static final int TIME_OUT_MS = 30000;
     private static final int DEFAULT_PORT = 80;
     private static final String DEFAULT_NAME = "port";
 
